@@ -12,7 +12,7 @@ fetch_jobs() {
 
     for j in $(curl -s "$HIPP_URL/api/json" | jq '.jobs | .[] | .name' | sed -s 's/"//g'); do
         echo "Backuping job $j..."
-        curl -s -n "$HIPP_URL/job/$j/config.xml" > "$j.xml"
+        curl -s "$HIPP_URL/job/$j/config.xml" > "$j.xml"
     done
 }
 
