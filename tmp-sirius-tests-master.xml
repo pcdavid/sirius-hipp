@@ -224,8 +224,6 @@
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <profiles>
                 <string>junit</string>
-                <string>swtbot</string>
-                <string>swtbot-sequence</string>
               </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
@@ -243,7 +241,7 @@
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">(Valeur par défaut)</originalValue>
+        <originalValue class="string">JDK 1.6.0 Latest</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>

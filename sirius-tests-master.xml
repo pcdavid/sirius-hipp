@@ -224,6 +224,8 @@
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <profiles>
                 <string>junit</string>
+                <string>swtbot-sequence</string>
+                <string>swtbot</string>
               </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
