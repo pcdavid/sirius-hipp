@@ -178,6 +178,12 @@
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
+          <hudson.tasks.Shell>
+            <command>sleep 2
+metacity --display=$DISPLAY --replace --sm-disable &amp;
+sleep 1
+metacity-message disable-keybindings</command>
+          </hudson.tasks.Shell>
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
@@ -223,7 +229,7 @@
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <profiles>
-                <string>junit</string>
+                <string>swtbot</string>
               </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
@@ -261,7 +267,7 @@
     <entry>
       <string>concurrentBuild</string>
       <boolean-property>
-        <originalValue class="boolean">false</originalValue>
+        <originalValue class="boolean">true</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
     </entry>

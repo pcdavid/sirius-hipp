@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<project>
+<matrix-project>
   <actions/>
   <description></description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
@@ -58,6 +58,28 @@
       </external-property>
     </entry>
     <entry>
+      <string>axes</string>
+      <axis-list-property>
+        <originalValue class="hudson.matrix.AxisList">
+          <hudson.matrix.TextAxis>
+            <name>PLATFORM</name>
+            <values>
+              <string>luna</string>
+            </values>
+          </hudson.matrix.TextAxis>
+          <hudson.matrix.TextAxis>
+            <name>SUITE</name>
+            <values>
+              <string>junit</string>
+              <string>swtbot-sequence</string>
+              <string>swtbot</string>
+            </values>
+          </hudson.matrix.TextAxis>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </axis-list-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
         <originalValue class="hudson.plugins.xvnc.Xvnc">
@@ -92,8 +114,14 @@
       <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
+    </entry>
+    <entry>
+      <string>combinationFilter</string>
+      <string-property>
+        <propertyOverridden>false</propertyOverridden>
+      </string-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -111,7 +139,7 @@
       <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -125,7 +153,7 @@
       <string>hudson-plugins-analysis-collector-AnalysisPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -187,7 +215,7 @@
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
               <properties>
                 <entries>
-                  <entry name="platform-version-name" value="luna"/>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
                 </entries>
               </properties>
               <errors>false</errors>
@@ -220,7 +248,7 @@ sleep 1
               <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
               <properties>
                 <entries>
-                  <entry name="platform-version-name" value="luna"/>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
                 </entries>
               </properties>
               <errors>false</errors>
@@ -228,9 +256,7 @@ sleep 1
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <profiles>
-                <string>junit</string>
-                <string>swtbot-sequence</string>
-                <string>swtbot</string>
+                <string>$SUITE</string>
               </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
@@ -248,7 +274,6 @@ sleep 1
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.6.0 Latest</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -257,6 +282,12 @@ sleep 1
       <base-property>
         <propertyOverridden>false</propertyOverridden>
       </base-property>
+    </entry>
+    <entry>
+      <string>touchStoneResultCondition</string>
+      <result-property>
+        <propertyOverridden>false</propertyOverridden>
+      </result-property>
     </entry>
     <entry>
       <string>concurrentBuild</string>
@@ -279,6 +310,13 @@ sleep 1
       </trigger-property>
     </entry>
     <entry>
+      <string>runSequentially</string>
+      <boolean-property>
+        <originalValue class="boolean">false</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
+    </entry>
+    <entry>
       <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
       <trigger-property>
         <propertyOverridden>false</propertyOverridden>
@@ -288,7 +326,7 @@ sleep 1
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -362,6 +400,12 @@ sleep 1
       </external-property>
     </entry>
     <entry>
+      <string>touchStoneCombinationFilter</string>
+      <string-property>
+        <propertyOverridden>false</propertyOverridden>
+      </string-property>
+    </entry>
+    <entry>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -377,12 +421,14 @@ sleep 1
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1412062619275</creationTime>
+  <creationTime>1412320946364</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
@@ -404,4 +450,6 @@ sleep 1
   <builders/>
   <publishers/>
   <buildWrappers/>
-</project>
+  <axes/>
+  <runSequentially>false</runSequentially>
+</matrix-project>
