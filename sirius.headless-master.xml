@@ -60,11 +60,8 @@
     <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -98,13 +95,8 @@
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
-        <originalValue class="hudson.tasks.junit.JUnitResultArchiver">
-          <testResults>plugins/*.test*/target/surefire-reports/*.xml</testResults>
-          <keepLongStdio>false</keepLongStdio>
-          <testDataPublishers/>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -131,7 +123,17 @@
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList"/>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.StringParameterDefinition>
+                <name>GERRIT_REFSPEC</name>
+                <description></description>
+                <defaultValue>refs/heads/master</defaultValue>
+              </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>
@@ -181,57 +183,17 @@
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
-              <privateRepository>true</privateRepository>
+              <goals>clean package -P!full</goals>
+              <privateRepository>false</privateRepository>
               <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
+              <pomFile>pom.xml</pomFile>
               <properties>
-                <entries>
-                  <entry name="platform-version-name" value="luna"/>
-                </entries>
+                <entries/>
               </properties>
               <errors>false</errors>
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
-          <hudson.tasks.Shell>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/luna!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_luna.target&quot;
-
-/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
-sleep 1
-/usr/bin/metacity-message disable-keybindings
-</command>
-          </hudson.tasks.Shell>
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean integration-test</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="luna"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <profiles>
-                <string>junit</string>
-                <string>swtbot-sequence</string>
-                <string>swtbot</string>
-              </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
@@ -248,7 +210,7 @@ sleep 1
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.6.0 Latest</originalValue>
+        <originalValue class="string">(Valeur par défaut)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -288,7 +250,7 @@ sleep 1
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -328,7 +290,7 @@ sleep 1
           </remoteRepositories>
           <branches>
             <hudson.plugins.git.BranchSpec>
-              <name>master</name>
+              <name>**</name>
             </hudson.plugins.git.BranchSpec>
           </branches>
           <mergeOptions/>
@@ -340,7 +302,9 @@ sleep 1
           <pruneBranches>false</pruneBranches>
           <remotePoll>false</remotePoll>
           <ignoreNotifyCommit>false</ignoreNotifyCommit>
-          <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+          <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser">
+            <separator>#</separator>
+          </buildChooser>
           <gitTool>Default</gitTool>
           <submoduleCfg class="list"/>
           <includedRegions></includedRegions>
@@ -371,13 +335,16 @@ sleep 1
     <entry>
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
+        <originalValue class="hudson.triggers.TimerTrigger">
+          <spec>@daily</spec>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1412062619275</creationTime>
+  <creationTime>1412846728650</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>

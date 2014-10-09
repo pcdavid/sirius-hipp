@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>This job uses jstack on every java process owned by the sirius HIPP user to dump its thread state in the console.&#xd;
+&#xd;
+This is usefull if you need some insights regarding a deadlock occuring during the CI for instance.</description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
@@ -44,6 +46,13 @@
       </boolean-property>
     </entry>
     <entry>
+      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-git-GitPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -51,7 +60,7 @@
       </external-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
+      <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -65,24 +74,7 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>hudson-tasks-Mailer</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -96,19 +88,14 @@
       </boolean-property>
     </entry>
     <entry>
-      <string>hudson-tasks-junit-JUnitResultArchiver</string>
+      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
       <external-property>
-        <originalValue class="hudson.tasks.junit.JUnitResultArchiver">
-          <testResults>plugins/*.test*/target/surefire-reports/*.xml</testResults>
-          <keepLongStdio>false</keepLongStdio>
-          <testDataPublishers/>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Fingerprinter</string>
+      <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -116,6 +103,13 @@
     </entry>
     <entry>
       <string>hudson-plugins-locksandlatches-LockWrapper</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -179,69 +173,12 @@
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command>sleep 2
-metacity --display=$DISPLAY --replace --sm-disable &amp;
-sleep 1
-metacity-message disable-keybindings</command>
+            <command>echo &apos;##################### Java Processes ##################################&apos;
+ps -ef | grep java |grep sirius 
+echo &apos;##################### Java processes states ###########################&apos;
+for i in $(ps -ef | grep java |grep sirius| awk &apos;{print $2}&apos;); do echo &quot;#######################################&quot; ; /opt/public/common/jdk1.6.0_45/bin/jstack $i ; done;
+</command>
           </hudson.tasks.Shell>
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="luna"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
-          <hudson.tasks.Shell>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/luna!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_luna.target&quot;</command>
-          </hudson.tasks.Shell>
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean integration-test</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="luna"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <profiles>
-                <string>junit</string>
-                <string>swtbot</string>
-                <string>swtbot-sequence</string>
-              </profiles>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
@@ -249,7 +186,7 @@ metacity-message disable-keybindings</command>
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.6.0 Latest</originalValue>
+        <originalValue class="string">(Valeur par défaut)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -260,18 +197,18 @@ metacity-message disable-keybindings</command>
       </base-property>
     </entry>
     <entry>
+      <string>concurrentBuild</string>
+      <boolean-property>
+        <originalValue class="boolean">false</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
-    </entry>
-    <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">true</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
     </entry>
     <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
@@ -293,74 +230,18 @@ metacity-message disable-keybindings</command>
       </external-property>
     </entry>
     <entry>
+      <string>scm</string>
+      <scm-property>
+        <originalValue class="hudson.scm.NullSCM"/>
+        <propertyOverridden>false</propertyOverridden>
+      </scm-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-findbugs-FindBugsPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
-    </entry>
-    <entry>
-      <string>scm</string>
-      <scm-property>
-        <originalValue class="hudson.plugins.git.GitSCM">
-          <configVersion>1</configVersion>
-          <remoteRepositories>
-            <RemoteConfig>
-              <name>origin</name>
-              <uris>
-                <org.eclipse.jgit.transport.URIish>
-                  <scheme>https</scheme>
-                  <path>/cbrun/org.eclipse.sirius.git</path>
-                  <rawPath>/cbrun/org.eclipse.sirius.git</rawPath>
-                  <port>-1</port>
-                  <host>github.com</host>
-                </org.eclipse.jgit.transport.URIish>
-              </uris>
-              <pushURIs/>
-              <fetch>
-                <org.eclipse.jgit.transport.RefSpec>
-                  <force>true</force>
-                  <wildcard>true</wildcard>
-                  <srcName>refs/heads/*</srcName>
-                  <dstName>refs/remotes/origin/*</dstName>
-                </org.eclipse.jgit.transport.RefSpec>
-              </fetch>
-              <push/>
-              <uploadpack>git-upload-pack</uploadpack>
-              <receivepack>git-receive-pack</receivepack>
-              <tagopt>AUTO_FOLLOW</tagopt>
-              <mirror>false</mirror>
-              <timeout>0</timeout>
-              <relativeTargetDir></relativeTargetDir>
-            </RemoteConfig>
-          </remoteRepositories>
-          <branches>
-            <hudson.plugins.git.BranchSpec>
-              <name>isModifiedSaving_430724_testbranch</name>
-            </hudson.plugins.git.BranchSpec>
-          </branches>
-          <mergeOptions/>
-          <recursiveSubmodules>false</recursiveSubmodules>
-          <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-          <authorOrCommitter>false</authorOrCommitter>
-          <clean>false</clean>
-          <wipeOutWorkspace>false</wipeOutWorkspace>
-          <pruneBranches>false</pruneBranches>
-          <remotePoll>false</remotePoll>
-          <ignoreNotifyCommit>false</ignoreNotifyCommit>
-          <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
-          <gitTool>Default</gitTool>
-          <submoduleCfg class="list"/>
-          <includedRegions></includedRegions>
-          <excludedRegions></excludedRegions>
-          <excludedUsers></excludedUsers>
-          <excludedCommits/>
-          <gitConfigName></gitConfigName>
-          <gitConfigEmail></gitConfigEmail>
-          <skipTag>false</skipTag>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </scm-property>
     </entry>
     <entry>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>
@@ -378,7 +259,7 @@ metacity-message disable-keybindings</command>
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>cedric.brun@obeo.fr</createdBy>
-  <creationTime>1412086192201</creationTime>
+  <creationTime>1412002371715</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
@@ -399,7 +280,10 @@ metacity-message disable-keybindings</command>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
   <builders/>
+  <publishers/>
+  <buildWrappers/>
 </project>

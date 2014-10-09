@@ -159,7 +159,17 @@
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList"/>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.BooleanParameterDefinition>
+                <name>Quick</name>
+                <description>Skip tests which take a long time to execute and/or are known to be unreliable.</description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>
@@ -249,6 +259,8 @@ sleep 1
               <properties>
                 <entries>
                   <entry name="platform-version-name" value="$PLATFORM"/>
+                  <entry name="tests.skipLongTests" value="$QUICK"/>
+                  <entry name="tests.skipUnreliableTests" value="$QUICK"/>
                 </entries>
               </properties>
               <errors>false</errors>
@@ -415,6 +427,9 @@ sleep 1
     <entry>
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
+        <originalValue class="hudson.triggers.TimerTrigger">
+          <spec>@daily</spec>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
