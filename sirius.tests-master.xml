@@ -163,8 +163,13 @@
           <hudson.model.ParametersDefinitionProperty>
             <parameterDefinitions>
               <hudson.model.BooleanParameterDefinition>
-                <name>Quick</name>
-                <description>Skip tests which take a long time to execute and/or are known to be unreliable.</description>
+                <name>tests.skipLongTests</name>
+                <description></description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+              <hudson.model.BooleanParameterDefinition>
+                <name>tests.skipUnreliableTests</name>
+                <description></description>
                 <defaultValue>false</defaultValue>
               </hudson.model.BooleanParameterDefinition>
             </parameterDefinitions>
@@ -242,7 +247,7 @@
             </config>
           </maven-builder>
           <hudson.tasks.Shell>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/luna!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_luna.target&quot;
+            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 
 /usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
 sleep 1
@@ -259,8 +264,6 @@ sleep 1
               <properties>
                 <entries>
                   <entry name="platform-version-name" value="$PLATFORM"/>
-                  <entry name="tests.skipLongTests" value="$QUICK"/>
-                  <entry name="tests.skipUnreliableTests" value="$QUICK"/>
                 </entries>
               </properties>
               <errors>false</errors>
