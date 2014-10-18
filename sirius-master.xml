@@ -219,7 +219,8 @@ on all supported target platforms.</description>
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean verify</goals>
+              <goals>clean
+verify</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
@@ -233,6 +234,8 @@ on all supported target platforms.</description>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <profiles>
+                <string>headless</string>
+                <string>full</string>
                 <string>pack</string>
                 <string>sign</string>
               </profiles>

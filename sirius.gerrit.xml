@@ -224,8 +224,36 @@ on all supported target platforms.</description>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
               <properties>
                 <entries>
-                  <entry name="platform-version-name" value="$PLATFORM"/>
                   <entry name="BUILD_SIGN" value="false"/>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
+                </entries>
+              </properties>
+              <errors>false</errors>
+              <verbosity>NORMAL</verbosity>
+              <offline>false</offline>
+              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <recursive>true</recursive>
+              <checksumMode>NORMAL</checksumMode>
+              <failMode>NORMAL</failMode>
+              <makeMode>NONE</makeMode>
+              <settingsId>NONE</settingsId>
+              <globalSettingsId>NONE</globalSettingsId>
+              <toolChainsId>NONE</toolChainsId>
+            </config>
+          </maven-builder>
+          <hudson.tasks.Shell>
+            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
+          </hudson.tasks.Shell>
+          <maven-builder>
+            <config>
+              <installationId>apache-maven-latest</installationId>
+              <goals>clean package</goals>
+              <privateRepository>true</privateRepository>
+              <privateTmpdir>false</privateTmpdir>
+              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
+              <properties>
+                <entries>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
                 </entries>
               </properties>
               <errors>false</errors>
