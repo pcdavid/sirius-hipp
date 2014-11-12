@@ -171,7 +171,7 @@
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command>echo $( /opt/public/common/jdk1.6.0_45/bin/jps -l | grep -Ev &apos;(hudson.war|sun.tools.jps.Jps)&apos; )</command>
+            <command>which jq</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
