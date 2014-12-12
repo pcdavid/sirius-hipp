@@ -77,8 +77,13 @@
     <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
+        <originalValue class="hudson.tasks.Mailer">
+          <recipients></recipients>
+          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+          <sendToIndividuals>true</sendToIndividuals>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
