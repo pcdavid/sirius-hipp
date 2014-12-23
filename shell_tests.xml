@@ -171,11 +171,7 @@
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command>git clone https://github.com/pcdavid/org.eclipse.sirius.git
-cd org.eclipse.sirius
-git checkout origin/testsPerfs
-./build-all.sh luna integration-test swtbot-sequence
-</command>
+            <command>ps fax</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>

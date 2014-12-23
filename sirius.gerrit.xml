@@ -84,8 +84,11 @@ on all supported target platforms.</description>
     <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -131,7 +134,7 @@ on all supported target platforms.</description>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -215,67 +218,37 @@ on all supported target platforms.</description>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean verify</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="$PLATFORM"/>
-                  <entry name="BUILD_SIGN" value="false"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
           <hudson.tasks.Shell>
-            <command>if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
-   export STREAM=&quot;latest&quot;
+            <command># Make sure we have a properly configured window manager for SWTbot tests
+/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
+WM_PID=$!
+sleep 1
+/usr/bin/metacity-message disable-keybindings
+
+# Build the core
+/shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.parent/pom.xml clean package
+
+# Adjust the target platform used to build/execute the tests to consume the local version of the core we just built
+if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
+    export STREAM=&quot;latest&quot;
 else
-   export STREAM=$(echo $GERRIT_BRANCH | sed -e &apos;s/v//&apos;)
+    export STREAM=$(echo $GERRIT_BRANCH | sed -e &apos;s/v//&apos;)
+fi
+sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+
+# Build the test, and if we are on master and build for the reference platform, also run the Gerrit-specific test-suites
+if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; -a &quot;$PLATFORM&quot; = &quot;luna&quot; ]; then
+    /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.tests.parent/pom.xml -Pgerrit-junit,gerrit-swtbot,gerrit-swtbot-sequence clean integration-test
+else
+    /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.tests.parent/pom.xml clean package
 fi
 
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+if ps --pid &quot;$WM_PID&quot; -o pid,args | grep -q metacity ; then
+  kill &quot;$WM_PID&quot;
+fi
+
 </command>
           </hudson.tasks.Shell>
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="$PLATFORM"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
