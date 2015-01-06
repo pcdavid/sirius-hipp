@@ -227,7 +227,22 @@ on all supported target platforms.</description>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command># Make sure we have a properly configured window manager for SWTbot tests
+            <command>if [ &quot;$PLATFORM&quot; = &quot;luna&quot; -o &quot;$SUITE&quot; = &quot;gerrit-junit&quot; ]; then
+
+message=&quot;Listening for VNC connections on TCP port&quot;
+logFileURL=&quot;https://hudson.eclipse.org/sirius/job/sirius.gerrit/$BUILD_NUMBER/PLATFORM=$PLATFORM,SUITE=$SUITE/consoleText&quot;
+attempt=1
+while ! ( curl &quot;$lofFileURL&quot; | grep -q &quot; $message &quot; ); do
+    sleep 5
+    if [ &quot;$attempt&quot; -gt &quot;4&quot; ]; then
+        echo &quot;Xvnc not ready; abandonning.&quot;
+        exit 1
+    else
+        attempt=$(( $attempt + 1 ))
+    fi
+done
+
+# Make sure we have a properly configured window manager for SWTbot tests
 /usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
 WM_PID=$!
 sleep 1
@@ -255,6 +270,7 @@ if ps --pid &quot;$WM_PID&quot; -o pid,args | grep -q metacity ; then
   kill &quot;$WM_PID&quot;
 fi
 
+fi
 </command>
           </hudson.tasks.Shell>
         </originalValue>
