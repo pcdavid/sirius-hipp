@@ -52,6 +52,13 @@ on all supported target platforms.</description>
       </boolean-property>
     </entry>
     <entry>
+      <string>hudson-plugins-git-GitPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -59,10 +66,20 @@ on all supported target platforms.</description>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-git-GitPublisher</string>
+      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -77,26 +94,17 @@ on all supported target platforms.</description>
               <string>luna</string>
             </values>
           </hudson.matrix.TextAxis>
+          <hudson.matrix.TextAxis>
+            <name>SUITE</name>
+            <values>
+              <string>gerrit-junit</string>
+              <string>gerrit-swtbot</string>
+              <string>gerrit-swtbot-sequence</string>
+            </values>
+          </hudson.matrix.TextAxis>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-Mailer</string>
@@ -111,18 +119,18 @@ on all supported target platforms.</description>
       </external-property>
     </entry>
     <entry>
-      <string>cleanWorkspaceRequired</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
-    <entry>
       <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
+    </entry>
+    <entry>
+      <string>cleanWorkspaceRequired</string>
+      <boolean-property>
+        <originalValue class="boolean">false</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
     </entry>
     <entry>
       <string>combinationFilter</string>
@@ -138,14 +146,14 @@ on all supported target platforms.</description>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-locksandlatches-LockWrapper</string>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Fingerprinter</string>
+      <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -238,7 +246,7 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
 
 # Build the test, and if we are on master and build for the reference platform, also run the Gerrit-specific test-suites
 if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; -a &quot;$PLATFORM&quot; = &quot;luna&quot; ]; then
-    /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.tests.parent/pom.xml -Pgerrit-junit,gerrit-swtbot,gerrit-swtbot-sequence clean integration-test
+    /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.tests.parent/pom.xml -P$SUITE clean integration-test
 else
     /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.tests.parent/pom.xml clean package
 fi
@@ -260,23 +268,16 @@ fi
       </string-property>
     </entry>
     <entry>
-      <string>appointedNode</string>
-      <base-property>
-        <propertyOverridden>false</propertyOverridden>
-      </base-property>
-    </entry>
-    <entry>
       <string>touchStoneResultCondition</string>
       <result-property>
         <propertyOverridden>false</propertyOverridden>
       </result-property>
     </entry>
     <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
+      <string>appointedNode</string>
+      <base-property>
         <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
+      </base-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
@@ -286,17 +287,17 @@ fi
       </external-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
-      <trigger-property>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
-    <entry>
-      <string>runSequentially</string>
+      <string>concurrentBuild</string>
       <boolean-property>
         <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
+    </entry>
+    <entry>
+      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
+      <trigger-property>
+        <propertyOverridden>false</propertyOverridden>
+      </trigger-property>
     </entry>
     <entry>
       <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
@@ -336,7 +337,29 @@ fi
       </trigger-property>
     </entry>
     <entry>
+      <string>runSequentially</string>
+      <boolean-property>
+        <originalValue class="boolean">false</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
+      <external-property>
+        <originalValue class="hudson.plugins.timestamper.TimestamperBuildWrapper"/>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -408,13 +431,6 @@ fi
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
     </entry>
     <entry>
       <string>touchStoneCombinationFilter</string>
