@@ -232,54 +232,86 @@ on all supported target platforms.</description>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command>if [ &quot;$PLATFORM&quot; = &quot;luna&quot; -o &quot;$SUITE&quot; = &quot;gerrit-junit&quot; ]; then
+            <command># Make sure the Xvnc server is completely started by looking for its output in the current job&apos;s console
+wait_for_xvnc() {
+    local readonly message=&quot;Listening for VNC connections on TCP port&quot;
+    local readonly logFileURL=&quot;https://hudson.eclipse.org/sirius/job/sirius.gerrit/$BUILD_NUMBER/PLATFORM=$PLATFORM,SUITE=$SUITE/consoleText&quot;
 
-message=&quot;Listening for VNC connections on TCP port&quot;
-logFileURL=&quot;https://hudson.eclipse.org/sirius/job/sirius.gerrit/$BUILD_NUMBER/PLATFORM=$PLATFORM,SUITE=$SUITE/consoleText&quot;
-attempt=1
-while ! ( curl -s &quot;$logFileURL&quot; | grep -q &quot; $message &quot; ); do
-    sleep 5
-    if [ &quot;$attempt&quot; -gt &quot;4&quot; ]; then
-        echo &quot;Xvnc not ready; abandonning.&quot;
-        exit 1
-    else
-        attempt=$(( $attempt + 1 ))
-    fi
-done
+    sleep 10
+
+    local attempt=1
+    while ! ( curl -s &quot;$logFileURL&quot; | grep -q &quot; $message &quot; ); do
+        sleep 5
+        if [ &quot;$attempt&quot; -gt &quot;4&quot; ]; then
+            echo &quot;Xvnc not ready; abandonning.&quot;
+            exit 1
+        else
+            attempt=$(( attempt + 1 ))
+        fi
+    done
+}
 
 # Make sure we have a properly configured window manager for SWTbot tests
-/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
-WM_PID=$!
-sleep 1
-/usr/bin/metacity-message disable-keybindings
+start_window_manager() {
+    /usr/bin/metacity --display=&quot;$DISPLAY&quot; --replace --sm-disable &amp;
+    export WM_PID=&quot;$!&quot;
+    sleep 1
+    /usr/bin/metacity-message disable-keybindings
+}
 
-# Build the core
-/shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.parent/pom.xml clean package
+kill_window_manager() {
+    if ps --pid &quot;$WM_PID&quot; -o pid,args | grep -q metacity ; then
+        kill &quot;$WM_PID&quot;
+    fi
+}
+
+# Create a well-formed but empty test report so that tests result
+# publication does not fail even in the matrix cells where we do not
+# actually run any tests.
+create_dummy_test_report() {
+    local readonly REPORT_DIR=&quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.junit/target/surefire-reports&quot;
+    local readonly REPORT=&apos;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;testrun name=&quot;Sirius Dummy Test Suite&quot; project=&quot;org.eclipse.sirius.tests.unit&quot; tests=&quot;1&quot; started=&quot;0&quot; failures=&quot;0&quot; errors=&quot;0&quot; ignored=&quot;1&quot;&gt;&lt;testsuite name=&quot;Sirius Dummy Tests&quot; time=&quot;0.001&quot;&gt;&lt;testcase name=&quot;testNothingJustToMakeHudsonHappy&quot; classname=&quot;org.eclipse.sirius.tests.unit.DummyTest&quot; time=&quot;0.01&quot;/&gt;&lt;/testsuite&gt;&lt;/testrun&gt;&apos;
+    mkdir -p &quot;$REPORT_DIR&quot;
+    echo  &quot;$REPORT&quot; &gt; &quot;$REPORT_DIR/empty-test-results.xml&quot;
+}
 
 # Adjust the target platform used to build/execute the tests to consume the local version of the core we just built
-if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
-    export STREAM=&quot;latest&quot;
-else
-    export STREAM=$(echo $GERRIT_BRANCH | sed -e &apos;s/v//&apos;)
-fi
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+adjust_tests_target_platform() {
+    if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
+        export STREAM=&quot;latest&quot;
+    else
+        export STREAM=$(echo &quot;$GERRIT_BRANCH&quot; | sed -e &apos;s/v//&apos;)
+    fi
+    sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+}
 
-# Build the test, and if we are on master and build for the reference platform, also run the Gerrit-specific test-suites
-if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; -a &quot;$PLATFORM&quot; = &quot;luna&quot; ]; then
-    /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.tests.parent/pom.xml -P$SUITE clean integration-test
-else
-    /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; -f packaging/org.eclipse.sirius.tests.parent/pom.xml clean package
-    mkdir -p $WORKSPACE/plugins/org.eclipse.sirius.tests.junit/target/surefire-reports/
-    echo &apos;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;testrun name=&quot;Sirius Dummy Test Suite&quot; project=&quot;org.eclipse.sirius.tests.unit&quot; tests=&quot;1&quot; started=&quot;0&quot; failures=&quot;0&quot; errors=&quot;0&quot; ignored=&quot;1&quot;&gt;&lt;testsuite name=&quot;Sirius Dummy Tests&quot; time=&quot;0.001&quot;&gt;&lt;testcase name=&quot;testNothingJustToMakeHudsonHappy&quot; classname=&quot;org.eclipse.sirius.tests.unit.DummyTest&quot; time=&quot;0.01&quot;/&gt;&lt;/testsuite&gt;&lt;/testrun&gt;&apos; &gt; $WORKSPACE/plugins/org.eclipse.sirius.tests.junit/target/surefire-reports/empty-test-results.xml
-fi
+invoke_maven() {
+    /shared/common/apache-maven-latest/bin/mvn -V -B -DBUILD_SIGN=false -Dmaven.repo.local=&quot;$WORKSPACE/.maven/repo&quot; -DPLATFORM=&quot;$PLATFORM&quot; -Dplatform-version-name=&quot;$PLATFORM&quot; &quot;$@&quot;
+}
 
-if ps --pid &quot;$WM_PID&quot; -o pid,args | grep -q metacity ; then
-  kill &quot;$WM_PID&quot;
-fi
+readonly REFERENCE_PLATFORM=&quot;luna&quot;
+if [ &quot;$PLATFORM&quot; = &quot;$REFERENCE_PLATFORM&quot; -o &quot;$SUITE&quot; = &quot;gerrit-junit&quot; ]; then
+    wait_for_xvnc
+    start_window_manager
 
+    # Build Sirius core
+    invoke_maven -f packaging/org.eclipse.sirius.parent/pom.xml clean package
+
+    # Build the tests, and run them on the reference platform
+    if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; -a &quot;$PLATFORM&quot; = &quot;$REFERENCE_PLATFORM&quot; ]; then
+        # Build and run Sirius tests
+        adjust_tests_target_platform
+        invoke_maven -f packaging/org.eclipse.sirius.tests.parent/pom.xml -P&quot;$SUITE&quot; clean integration-test
+    else
+        # Build Sirius tests but do not execute them
+        adjust_tests_target_platform
+        invoke_maven -f packaging/org.eclipse.sirius.tests.parent/pom.xml clean package
+        create_dummy_test_report
+    fi
+
+    kill_window_manager
 else
-  mkdir -p $WORKSPACE/plugins/org.eclipse.sirius.tests.junit/target/surefire-reports/
-  echo &apos;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;testrun name=&quot;Sirius Dummy Test Suite&quot; project=&quot;org.eclipse.sirius.tests.unit&quot; tests=&quot;1&quot; started=&quot;0&quot; failures=&quot;0&quot; errors=&quot;0&quot; ignored=&quot;1&quot;&gt;&lt;testsuite name=&quot;Sirius Dummy Tests&quot; time=&quot;0.001&quot;&gt;&lt;testcase name=&quot;testNothingJustToMakeHudsonHappy&quot; classname=&quot;org.eclipse.sirius.tests.unit.DummyTest&quot; time=&quot;0.01&quot;/&gt;&lt;/testsuite&gt;&lt;/testrun&gt;&apos; &gt; $WORKSPACE/plugins/org.eclipse.sirius.tests.junit/target/surefire-reports/empty-test-results.xml
+    create_dummy_test_report
 fi
 </command>
           </hudson.tasks.Shell>
