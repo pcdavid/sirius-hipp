@@ -65,6 +65,7 @@
             <name>PLATFORM</name>
             <values>
               <string>luna</string>
+              <string>mars</string>
             </values>
           </hudson.matrix.TextAxis>
           <hudson.matrix.TextAxis>

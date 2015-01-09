@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<project>
+<matrix-project>
   <actions/>
   <description></description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
@@ -75,6 +75,29 @@
       </external-property>
     </entry>
     <entry>
+      <string>axes</string>
+      <axis-list-property>
+        <originalValue class="hudson.matrix.AxisList">
+          <hudson.matrix.TextAxis>
+            <name>PLATFORM</name>
+            <values>
+              <string>mars</string>
+            </values>
+          </hudson.matrix.TextAxis>
+          <hudson.matrix.TextAxis>
+            <name>SUITE</name>
+            <values>
+              <string>junit</string>
+              <string>swtbot-sequence</string>
+              <string>swtbot-part1</string>
+              <string>swtbot-part2</string>
+            </values>
+          </hudson.matrix.TextAxis>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </axis-list-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
         <originalValue class="hudson.tasks.Mailer">
@@ -90,7 +113,7 @@
       <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -99,6 +122,12 @@
         <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
+    </entry>
+    <entry>
+      <string>combinationFilter</string>
+      <string-property>
+        <propertyOverridden>false</propertyOverridden>
+      </string-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -123,20 +152,35 @@
       <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-plugins-analysis-collector-AnalysisPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList"/>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.BooleanParameterDefinition>
+                <name>tests.skipLongTests</name>
+                <description></description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+              <hudson.model.BooleanParameterDefinition>
+                <name>tests.skipUnreliableTests</name>
+                <description></description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>
@@ -183,22 +227,19 @@
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
-          <hudson.tasks.Shell>
-            <command>sleep 2
-metacity --display=$DISPLAY --replace --sm-disable &amp;
-sleep 1
-metacity-message disable-keybindings</command>
-          </hudson.tasks.Shell>
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
+              <goals>clean
+package
+-B
+</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
               <properties>
                 <entries>
-                  <entry name="platform-version-name" value="luna"/>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
                 </entries>
               </properties>
               <errors>false</errors>
@@ -215,18 +256,31 @@ metacity-message disable-keybindings</command>
             </config>
           </maven-builder>
           <hudson.tasks.Shell>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/luna!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_luna.target&quot;</command>
+            <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
+sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+
+# Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
+rm -rf &quot;$WORKSPACEp/lugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
+
+# Make sure we have a properly configured window manager for SWTbot tests
+/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
+sleep 1
+/usr/bin/metacity-message disable-keybindings
+</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean integration-test</goals>
+              <goals>clean
+integration-test
+-B
+</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
               <properties>
                 <entries>
-                  <entry name="platform-version-name" value="luna"/>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
                 </entries>
               </properties>
               <errors>false</errors>
@@ -234,9 +288,7 @@ metacity-message disable-keybindings</command>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <profiles>
-                <string>junit</string>
-                <string>swtbot</string>
-                <string>swtbot-sequence</string>
+                <string>$SUITE</string>
               </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
@@ -254,9 +306,14 @@ metacity-message disable-keybindings</command>
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.6.0 Latest</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
+    </entry>
+    <entry>
+      <string>touchStoneResultCondition</string>
+      <result-property>
+        <propertyOverridden>false</propertyOverridden>
+      </result-property>
     </entry>
     <entry>
       <string>appointedNode</string>
@@ -274,7 +331,7 @@ metacity-message disable-keybindings</command>
     <entry>
       <string>concurrentBuild</string>
       <boolean-property>
-        <originalValue class="boolean">true</originalValue>
+        <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
     </entry>
@@ -289,6 +346,21 @@ metacity-message disable-keybindings</command>
       <trigger-property>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
+    </entry>
+    <entry>
+      <string>runSequentially</string>
+      <boolean-property>
+        <originalValue class="boolean">false</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
+      <external-property>
+        <originalValue class="hudson.plugins.timestamper.TimestamperBuildWrapper"/>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
@@ -314,11 +386,11 @@ metacity-message disable-keybindings</command>
               <name>origin</name>
               <uris>
                 <org.eclipse.jgit.transport.URIish>
-                  <scheme>https</scheme>
-                  <path>/cbrun/org.eclipse.sirius.git</path>
-                  <rawPath>/cbrun/org.eclipse.sirius.git</rawPath>
+                  <scheme>http</scheme>
+                  <path>/gitroot/sirius/org.eclipse.sirius.git</path>
+                  <rawPath>/gitroot/sirius/org.eclipse.sirius.git</rawPath>
                   <port>-1</port>
-                  <host>github.com</host>
+                  <host>git.eclipse.org</host>
                 </org.eclipse.jgit.transport.URIish>
               </uris>
               <pushURIs/>
@@ -341,7 +413,7 @@ metacity-message disable-keybindings</command>
           </remoteRepositories>
           <branches>
             <hudson.plugins.git.BranchSpec>
-              <name>isModifiedSaving_430724_testbranch</name>
+              <name>master</name>
             </hudson.plugins.git.BranchSpec>
           </branches>
           <mergeOptions/>
@@ -368,6 +440,12 @@ metacity-message disable-keybindings</command>
       </scm-property>
     </entry>
     <entry>
+      <string>touchStoneCombinationFilter</string>
+      <string-property>
+        <propertyOverridden>false</propertyOverridden>
+      </string-property>
+    </entry>
+    <entry>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -377,22 +455,25 @@ metacity-message disable-keybindings</command>
     <entry>
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
+        <originalValue class="hudson.triggers.TimerTrigger">
+          <spec>@daily</spec>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
-  <createdBy>cedric.brun@obeo.fr</createdBy>
-  <creationTime>1412086192201</creationTime>
+  <createdBy>pierre-charles.david@obeo.fr</createdBy>
+  <creationTime>1420796568577</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
@@ -407,4 +488,6 @@ metacity-message disable-keybindings</command>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
   <builders/>
-</project>
+  <axes/>
+  <runSequentially>false</runSequentially>
+</matrix-project>
