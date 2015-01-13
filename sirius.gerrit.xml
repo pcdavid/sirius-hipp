@@ -294,8 +294,6 @@ sh gerrit-verify.sh</command>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           </gerritProjects>
-          <gerritBuildUnstableVerifiedValue>-1</gerritBuildUnstableVerifiedValue>
-          <gerritBuildUnstableCodeReviewValue>0</gerritBuildUnstableCodeReviewValue>
           <silentMode>false</silentMode>
           <escapeQuotes>true</escapeQuotes>
           <buildStartMessage></buildStartMessage>
