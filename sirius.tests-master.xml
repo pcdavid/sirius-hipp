@@ -267,7 +267,8 @@ rm -rf &quot;$WORKSPACEp/lugins/org.eclipse.sirius.tests.swtbot/screenshots&quot
 /usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
 sleep 1
 /usr/bin/metacity-message disable-keybindings
-</command>
+
+export SWT_GTK3=0</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <config>

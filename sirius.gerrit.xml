@@ -109,11 +109,6 @@ on all supported target platforms.</description>
     <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
-        <originalValue class="hudson.tasks.Mailer">
-          <recipients>pierre-charles.david@obeo.fr</recipients>
-          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-          <sendToIndividuals>false</sendToIndividuals>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
@@ -232,7 +227,8 @@ on all supported target platforms.</description>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command>curl -s &quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git/plain/releng/org.eclipse.sirius.releng/gerrit-verify.sh&quot; &gt; gerrit-verify.sh
+            <command>export SWT_GTK3=0
+curl -s &quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git/plain/releng/org.eclipse.sirius.releng/gerrit-verify.sh&quot; &gt; gerrit-verify.sh
 sh gerrit-verify.sh</command>
           </hudson.tasks.Shell>
         </originalValue>
