@@ -135,11 +135,6 @@ on all supported target platforms.</description>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
-        <originalValue class="hudson.tasks.junit.JUnitResultArchiver">
-          <testResults>plugins/*.test*/target/surefire-reports/*.xml</testResults>
-          <keepLongStdio>false</keepLongStdio>
-          <testDataPublishers/>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
@@ -303,6 +298,9 @@ export SWT_GTK3=0</command>
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles>
+                <string>$SUITE</string>
+              </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
