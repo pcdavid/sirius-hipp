@@ -94,6 +94,12 @@ on all supported target platforms.</description>
       <external-property>
         <originalValue class="hudson.plugins.xvnc.Xvnc">
           <takeScreenshot>false</takeScreenshot>
+          <allocator>
+            <allocatedNumbers/>
+            <blacklistedNumbers/>
+            <minDisplayNumber>10</minDisplayNumber>
+            <maxDisplayNumber>999</maxDisplayNumber>
+          </allocator>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
@@ -453,7 +459,7 @@ sh gerrit-verify.sh</command>
   </cascading-job-properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <concurrentBuild>false</concurrentBuild>

@@ -90,6 +90,7 @@ on all supported target platforms.</description>
               <string>kepler</string>
               <string>luna</string>
               <string>mars</string>
+              <string>staging</string>
             </values>
           </hudson.matrix.TextAxis>
         </originalValue>
@@ -463,8 +464,8 @@ verify</goals>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
