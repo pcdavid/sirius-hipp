@@ -44,6 +44,13 @@
       </boolean-property>
     </entry>
     <entry>
+      <string>hudson-plugins-git-GitPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -51,7 +58,7 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-git-GitPublisher</string>
+      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -68,14 +75,14 @@
       </external-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
+      <string>hudson-tasks-Mailer</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Mailer</string>
+      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -87,13 +94,6 @@
         <originalValue class="boolean">true</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -108,14 +108,14 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-locksandlatches-LockWrapper</string>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Fingerprinter</string>
+      <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -235,7 +235,7 @@
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.6.0 Latest</originalValue>
+        <originalValue class="string">JDK 1.7.0 Latest</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -244,13 +244,6 @@
       <base-property>
         <propertyOverridden>false</propertyOverridden>
       </base-property>
-    </entry>
-    <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">true</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
@@ -264,6 +257,13 @@
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
+    </entry>
+    <entry>
+      <string>concurrentBuild</string>
+      <boolean-property>
+        <originalValue class="boolean">true</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
     </entry>
     <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
@@ -317,6 +317,13 @@
     </entry>
     <entry>
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -388,13 +395,6 @@
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
     </entry>
     <entry>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>

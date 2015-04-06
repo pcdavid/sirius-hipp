@@ -90,7 +90,6 @@ on all supported target platforms.</description>
               <string>kepler</string>
               <string>luna</string>
               <string>mars</string>
-              <string>staging</string>
             </values>
           </hudson.matrix.TextAxis>
         </originalValue>

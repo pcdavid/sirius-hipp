@@ -1,9 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>This job uses jstack on every java process owned by the sirius HIPP user to dump its thread state in the console.&#xd;
-&#xd;
-This is usefull if you need some insights regarding a deadlock occuring during the CI for instance.</description>
+  <description></description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
@@ -173,11 +171,7 @@ This is usefull if you need some insights regarding a deadlock occuring during t
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command>echo &apos;##################### Java Processes ##################################&apos;
-ps -ef | grep java |grep sirius 
-echo &apos;##################### Java processes states ###########################&apos;
-for i in $(ps -ef | grep java |grep sirius| awk &apos;{print $2}&apos;); do echo &quot;#######################################&quot; ; /opt/public/common/jdk1.6.0_45/bin/jstack $i ; done;
-</command>
+            <command>free</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
@@ -223,6 +217,13 @@ for i in $(ps -ef | grep java |grep sirius| awk &apos;{print $2}&apos;); do echo
       </trigger-property>
     </entry>
     <entry>
+      <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -259,7 +260,7 @@ for i in $(ps -ef | grep java |grep sirius| awk &apos;{print $2}&apos;); do echo
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>cedric.brun@obeo.fr</createdBy>
-  <creationTime>1412002371715</creationTime>
+  <creationTime>1427795457738</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>

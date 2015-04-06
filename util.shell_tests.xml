@@ -44,13 +44,6 @@
       </boolean-property>
     </entry>
     <entry>
-      <string>hudson-plugins-git-GitPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -58,7 +51,7 @@
       </external-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
+      <string>hudson-plugins-git-GitPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -72,14 +65,14 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Mailer</string>
+      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <string>hudson-tasks-Mailer</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -93,6 +86,13 @@
       </boolean-property>
     </entry>
     <entry>
+      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -100,14 +100,14 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Fingerprinter</string>
+      <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-locksandlatches-LockWrapper</string>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -171,32 +171,9 @@
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
-            <command>git clean -dfx
-git reset --hard origin/master</command>
+            <command>WORKSPACE=&quot;/home/hudson/genie.modeling.sirius/.hudson/jobs/sirius.gerrit/workspace/PLATFORM/luna/SUITE/gerrit-junit&quot;
+find &quot;$WORKSPACE/.maven/repo/p2/osgi/bundle&quot; -type d -name &quot;org.eclipse.sirius.*&quot; | sort | xargs du -csh</command>
           </hudson.tasks.Shell>
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean package -P!full</goals>
-              <privateRepository>false</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>pom.xml</pomFile>
-              <properties>
-                <entries/>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
@@ -215,18 +192,18 @@ git reset --hard origin/master</command>
       </base-property>
     </entry>
     <entry>
-      <string>hudson-tasks-ArtifactArchiver</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>concurrentBuild</string>
       <boolean-property>
         <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
+    </entry>
+    <entry>
+      <string>hudson-tasks-ArtifactArchiver</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
     </entry>
     <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
@@ -255,76 +232,18 @@ git reset --hard origin/master</command>
       </external-property>
     </entry>
     <entry>
+      <string>scm</string>
+      <scm-property>
+        <originalValue class="hudson.scm.NullSCM"/>
+        <propertyOverridden>false</propertyOverridden>
+      </scm-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-findbugs-FindBugsPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
-    </entry>
-    <entry>
-      <string>scm</string>
-      <scm-property>
-        <originalValue class="hudson.plugins.git.GitSCM">
-          <configVersion>1</configVersion>
-          <remoteRepositories>
-            <RemoteConfig>
-              <name>origin</name>
-              <uris>
-                <org.eclipse.jgit.transport.URIish>
-                  <scheme>http</scheme>
-                  <path>/gitroot/sirius/org.eclipse.sirius.git</path>
-                  <rawPath>/gitroot/sirius/org.eclipse.sirius.git</rawPath>
-                  <port>-1</port>
-                  <host>git.eclipse.org</host>
-                </org.eclipse.jgit.transport.URIish>
-              </uris>
-              <pushURIs/>
-              <fetch>
-                <org.eclipse.jgit.transport.RefSpec>
-                  <force>true</force>
-                  <wildcard>true</wildcard>
-                  <srcName>refs/heads/*</srcName>
-                  <dstName>refs/remotes/origin/*</dstName>
-                </org.eclipse.jgit.transport.RefSpec>
-              </fetch>
-              <push/>
-              <uploadpack>git-upload-pack</uploadpack>
-              <receivepack>git-receive-pack</receivepack>
-              <tagopt>AUTO_FOLLOW</tagopt>
-              <mirror>false</mirror>
-              <timeout>0</timeout>
-              <relativeTargetDir></relativeTargetDir>
-            </RemoteConfig>
-          </remoteRepositories>
-          <branches>
-            <hudson.plugins.git.BranchSpec>
-              <name>**</name>
-            </hudson.plugins.git.BranchSpec>
-          </branches>
-          <mergeOptions/>
-          <recursiveSubmodules>false</recursiveSubmodules>
-          <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-          <authorOrCommitter>false</authorOrCommitter>
-          <clean>false</clean>
-          <wipeOutWorkspace>false</wipeOutWorkspace>
-          <pruneBranches>false</pruneBranches>
-          <remotePoll>false</remotePoll>
-          <ignoreNotifyCommit>false</ignoreNotifyCommit>
-          <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser">
-            <separator>#</separator>
-          </buildChooser>
-          <gitTool>Default</gitTool>
-          <submoduleCfg class="list"/>
-          <includedRegions></includedRegions>
-          <excludedRegions></excludedRegions>
-          <excludedUsers></excludedUsers>
-          <excludedCommits/>
-          <gitConfigName></gitConfigName>
-          <gitConfigEmail></gitConfigEmail>
-          <skipTag>false</skipTag>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </scm-property>
     </entry>
     <entry>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>
@@ -336,16 +255,13 @@ git reset --hard origin/master</command>
     <entry>
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
-        <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>@daily</spec>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1412846728650</creationTime>
+  <creationTime>1412766876860</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
