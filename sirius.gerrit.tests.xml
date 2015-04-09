@@ -89,7 +89,6 @@ on all supported target platforms.</description>
           <hudson.matrix.TextAxis>
             <name>PLATFORM</name>
             <values>
-              <string>luna</string>
               <string>mars</string>
             </values>
           </hudson.matrix.TextAxis>
