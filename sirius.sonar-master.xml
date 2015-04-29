@@ -137,9 +137,9 @@
           <branch></branch>
           <language></language>
           <mavenOpts>-XX:MaxPermSize=128m -Xmx2g</mavenOpts>
-          <jobAdditionalProperties>-Dmaven.repo.local=$WORKSPACE/.maven/repo -Djava.io.tmpdir=$WORKSPACE/.maven/tmp -Dsonar.language=java</jobAdditionalProperties>
+          <jobAdditionalProperties>-P headless -P full -Dmaven.repo.local=$WORKSPACE/.maven/repo -Djava.io.tmpdir=$WORKSPACE/.maven/tmp -Dsonar.language=java</jobAdditionalProperties>
           <mavenInstallationName>apache-maven-latest</mavenInstallationName>
-          <rootPom>packaging/org.eclipse.sirius.tests.parent/pom.xml</rootPom>
+          <rootPom>packaging/org.eclipse.sirius.parent/pom.xml</rootPom>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
@@ -219,20 +219,23 @@
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean verify</goals>
-              <privateRepository>false</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
+              <goals>clean install</goals>
+              <privateRepository>true</privateRepository>
+              <privateTmpdir>true</privateTmpdir>
+              <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
               <properties>
                 <entries>
                   <entry name="platform-version-name" value="$PLATFORM"/>
-                  <entry name="code.coverage" value="true"/>
                 </entries>
               </properties>
               <errors>false</errors>
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles>
+                <string>headless</string>
+                <string>full</string>
+              </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
