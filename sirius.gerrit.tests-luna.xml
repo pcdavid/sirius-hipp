@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <matrix-project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;&#xd;
+  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; and launchs associated tests&#xd;
 from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;&#xd;
-on all supported target platforms.</description>
+on last supported target platforms (luna).</description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
@@ -72,7 +72,7 @@ on all supported target platforms.</description>
           <hudson.matrix.TextAxis>
             <name>PLATFORM</name>
             <values>
-              <string>mars</string>
+              <string>luna</string>
             </values>
           </hudson.matrix.TextAxis>
           <hudson.matrix.TextAxis>
@@ -214,7 +214,7 @@ on all supported target platforms.</description>
       <string>hudson-plugins-build_timeout-BuildTimeoutWrapper</string>
       <external-property>
         <originalValue class="hudson.plugins.build_timeout.BuildTimeoutWrapper">
-          <timeoutMinutes>60</timeoutMinutes>
+          <timeoutMinutes>180</timeoutMinutes>
           <failBuild>false</failBuild>
           <writingDescription>false</writingDescription>
           <timeoutPercentage>150</timeoutPercentage>
@@ -355,7 +355,7 @@ export SWT_GTK3=0</command>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>plugins/*.test*/target/work/data/.metadata/*log</artifacts>
+          <artifacts>plugins/*.test*/target/work/data/.metadata/*log, plugins/*.test*/target/surefire.properties</artifacts>
           <compressionType>NONE</compressionType>
           <latestOnly>false</latestOnly>
           <autoValidateFileMask>false</autoValidateFileMask>
@@ -389,7 +389,7 @@ export SWT_GTK3=0</command>
               <branches>
                 <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
                   <compareType>ANT</compareType>
-                  <pattern>**</pattern>
+                  <pattern>v2.0.x</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
@@ -524,17 +524,17 @@ export SWT_GTK3=0</command>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
-  <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1426867369802</creationTime>
+  <createdBy>laurent.redor@obeo.fr</createdBy>
+  <creationTime>1432885490827</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

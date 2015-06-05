@@ -3,7 +3,7 @@
   <actions/>
   <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;&#xd;
 from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;&#xd;
-on all supported target platforms.</description>
+on all supported target platforms (from juno to luna).</description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
@@ -75,7 +75,6 @@ on all supported target platforms.</description>
               <string>juno</string>
               <string>kepler</string>
               <string>luna</string>
-              <string>mars</string>
             </values>
           </hudson.matrix.TextAxis>
         </originalValue>
@@ -139,6 +138,13 @@ on all supported target platforms.</description>
     </entry>
     <entry>
       <string>hudson-tasks-Fingerprinter</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-sonar-SonarPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -284,6 +290,7 @@ on all supported target platforms.</description>
     <entry>
       <string>jdk</string>
       <string-property>
+        <originalValue class="string">(Hérite du job)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -338,7 +345,7 @@ on all supported target platforms.</description>
               <branches>
                 <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
                   <compareType>ANT</compareType>
-                  <pattern>**</pattern>
+                  <pattern>v2.0.x</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
@@ -473,17 +480,17 @@ on all supported target platforms.</description>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
-  <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1426867073773</creationTime>
+  <createdBy>laurent.redor@obeo.fr</createdBy>
+  <creationTime>1432885427165</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
