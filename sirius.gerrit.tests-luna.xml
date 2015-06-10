@@ -281,7 +281,7 @@ on last supported target platforms (luna).</description>
           </maven-builder>
           <hudson.tasks.Shell>
             <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/2.0.x/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 
 # Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
 rm -rf &quot;$WORKSPACEp/lugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
@@ -528,8 +528,8 @@ export SWT_GTK3=0</command>
   <creationTime>1432885490827</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
