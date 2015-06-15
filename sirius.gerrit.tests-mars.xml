@@ -281,7 +281,12 @@ on last supported target platforms (mars).</description>
           </maven-builder>
           <hudson.tasks.Shell>
             <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
+  STREAM=&quot;latest&quot;
+else
+  STREAM=$(echo &quot;$GERRIT_BRANCH&quot; | sed -e &apos;s/v//&apos;)
+fi
+sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 
 # Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
 rm -rf &quot;$WORKSPACEp/lugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
@@ -383,6 +388,10 @@ export SWT_GTK3=0</command>
                 <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
                   <compareType>ANT</compareType>
                   <pattern>master</pattern>
+                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                  <compareType>ANT</compareType>
+                  <pattern>v3.0.x</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
@@ -528,8 +537,8 @@ export SWT_GTK3=0</command>
   <creationTime>1426867369802</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
