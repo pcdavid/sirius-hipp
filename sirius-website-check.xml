@@ -1,9 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<matrix-project>
+<project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;&#xd;
-from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;&#xd;
-on all supported target platforms (from juno to luna).</description>
+  <description></description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
@@ -29,12 +27,6 @@ on all supported target platforms (from juno to luna).</description>
     <entry>
       <string>logRotator</string>
       <log-rotator-property>
-        <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>14</daysToKeep>
-          <numToKeep>-1</numToKeep>
-          <artifactDaysToKeep>-1</artifactDaysToKeep>
-          <artifactNumToKeep>-1</artifactNumToKeep>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </log-rotator-property>
     </entry>
@@ -66,26 +58,10 @@ on all supported target platforms (from juno to luna).</description>
       </external-property>
     </entry>
     <entry>
-      <string>axes</string>
-      <axis-list-property>
-        <originalValue class="hudson.matrix.AxisList">
-          <hudson.matrix.TextAxis>
-            <name>PLATFORM</name>
-            <values>
-              <string>juno</string>
-              <string>kepler</string>
-              <string>luna</string>
-            </values>
-          </hudson.matrix.TextAxis>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </axis-list-property>
-    </entry>
-    <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -99,7 +75,7 @@ on all supported target platforms (from juno to luna).</description>
       <string>hudson-tasks-Mailer</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -113,27 +89,21 @@ on all supported target platforms (from juno to luna).</description>
       <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
-    </entry>
-    <entry>
-      <string>combinationFilter</string>
-      <string-property>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -160,17 +130,7 @@ on all supported target platforms (from juno to luna).</description>
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList">
-          <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-              <hudson.model.StringParameterDefinition>
-                <name>GERRIT_REFSPEC</name>
-                <description></description>
-                <defaultValue>refs/heads/master</defaultValue>
-              </hudson.model.StringParameterDefinition>
-            </parameterDefinitions>
-          </hudson.model.ParametersDefinitionProperty>
-        </originalValue>
+        <originalValue class="hudson.util.CopyOnWriteList"/>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>
@@ -184,16 +144,8 @@ on all supported target platforms (from juno to luna).</description>
     <entry>
       <string>hudson-plugins-build_timeout-BuildTimeoutWrapper</string>
       <external-property>
-        <originalValue class="hudson.plugins.build_timeout.BuildTimeoutWrapper">
-          <timeoutMinutes>60</timeoutMinutes>
-          <failBuild>false</failBuild>
-          <writingDescription>false</writingDescription>
-          <timeoutPercentage>150</timeoutPercentage>
-          <timeoutType>absolute</timeoutType>
-          <timeoutMinutesElasticDefault>60</timeoutMinutesElasticDefault>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -218,6 +170,9 @@ on all supported target platforms (from juno to luna).</description>
     <entry>
       <string>hudson-triggers-SCMTrigger</string>
       <trigger-property>
+        <originalValue class="hudson.triggers.SCMTrigger">
+          <spec>@daily</spec>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
@@ -225,64 +180,13 @@ on all supported target platforms (from juno to luna).</description>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="$PLATFORM"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <profiles>
-                <string>headless</string>
-                <string>full</string>
-                <string>pack</string>
-              </profiles>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
           <hudson.tasks.Shell>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/2.0.x/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
+            <command>wget  -np -o links.txt -r -l 6 -e robots=off --spider http://www.eclipse.org/sirius/
+if grep -q &apos; 404 &apos; links.txt; then
+  grep -B 2 &apos; 404 &apos; links.txt &gt; errors.txt
+  exit 1
+fi</command>
           </hudson.tasks.Shell>
-          <maven-builder>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="$PLATFORM"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
@@ -290,7 +194,7 @@ on all supported target platforms (from juno to luna).</description>
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
+        <originalValue class="string">(Valeur par défaut)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -299,12 +203,6 @@ on all supported target platforms (from juno to luna).</description>
       <base-property>
         <propertyOverridden>false</propertyOverridden>
       </base-property>
-    </entry>
-    <entry>
-      <string>touchStoneResultCondition</string>
-      <result-property>
-        <propertyOverridden>false</propertyOverridden>
-      </result-property>
     </entry>
     <entry>
       <string>concurrentBuild</string>
@@ -316,8 +214,14 @@ on all supported target platforms (from juno to luna).</description>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
+        <originalValue class="hudson.tasks.ArtifactArchiver">
+          <artifacts>links.txt,errors.txt</artifacts>
+          <compressionType>GZIP</compressionType>
+          <latestOnly>false</latestOnly>
+          <autoValidateFileMask>false</autoValidateFileMask>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -327,55 +231,16 @@ on all supported target platforms (from juno to luna).</description>
       </trigger-property>
     </entry>
     <entry>
-      <string>runSequentially</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
-    <entry>
       <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
       <trigger-property>
-        <originalValue class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger">
-          <spec></spec>
-          <gerritProjects>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-              <compareType>ANT</compareType>
-              <pattern>sirius/org.eclipse.sirius</pattern>
-              <branches>
-                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-                  <compareType>ANT</compareType>
-                  <pattern>v2.0.x</pattern>
-                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              </branches>
-            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-          </gerritProjects>
-          <silentMode>false</silentMode>
-          <escapeQuotes>true</escapeQuotes>
-          <buildStartMessage></buildStartMessage>
-          <buildFailureMessage></buildFailureMessage>
-          <buildSuccessfulMessage></buildSuccessfulMessage>
-          <buildUnstableMessage></buildUnstableMessage>
-          <buildNotBuiltMessage></buildNotBuiltMessage>
-          <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-          <customUrl></customUrl>
-          <triggerOnEvents>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent/>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
-          </triggerOnEvents>
-          <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-          <triggerConfigURL></triggerConfigURL>
-          <triggerInformationAction/>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
     <entry>
       <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
       <external-property>
-        <originalValue class="hudson.plugins.timestamper.TimestamperBuildWrapper"/>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -395,9 +260,9 @@ on all supported target platforms (from juno to luna).</description>
               <name>origin</name>
               <uris>
                 <org.eclipse.jgit.transport.URIish>
-                  <scheme>http</scheme>
-                  <path>/gitroot/sirius/org.eclipse.sirius.git</path>
-                  <rawPath>/gitroot/sirius/org.eclipse.sirius.git</rawPath>
+                  <scheme>git</scheme>
+                  <path>/gitroot/www.eclipse.org/sirius.git</path>
+                  <rawPath>/gitroot/www.eclipse.org/sirius.git</rawPath>
                   <port>-1</port>
                   <host>git.eclipse.org</host>
                 </org.eclipse.jgit.transport.URIish>
@@ -405,9 +270,10 @@ on all supported target platforms (from juno to luna).</description>
               <pushURIs/>
               <fetch>
                 <org.eclipse.jgit.transport.RefSpec>
-                  <force>false</force>
-                  <wildcard>false</wildcard>
-                  <srcName>$GERRIT_REFSPEC</srcName>
+                  <force>true</force>
+                  <wildcard>true</wildcard>
+                  <srcName>refs/heads/*</srcName>
+                  <dstName>refs/remotes/origin/*</dstName>
                 </org.eclipse.jgit.transport.RefSpec>
               </fetch>
               <push/>
@@ -421,7 +287,7 @@ on all supported target platforms (from juno to luna).</description>
           </remoteRepositories>
           <branches>
             <hudson.plugins.git.BranchSpec>
-              <name>**</name>
+              <name>master</name>
             </hudson.plugins.git.BranchSpec>
           </branches>
           <mergeOptions/>
@@ -433,13 +299,8 @@ on all supported target platforms (from juno to luna).</description>
           <pruneBranches>false</pruneBranches>
           <remotePoll>false</remotePoll>
           <ignoreNotifyCommit>false</ignoreNotifyCommit>
-          <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser">
-            <separator>#</separator>
-          </buildChooser>
+          <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
           <gitTool>Default</gitTool>
-          <browser class="hudson.plugins.git.browser.CGit">
-            <url>http://git.eclipse.org/c/sirius/org.eclipse.sirius.git/</url>
-          </browser>
           <submoduleCfg class="list"/>
           <includedRegions></includedRegions>
           <excludedRegions></excludedRegions>
@@ -460,12 +321,6 @@ on all supported target platforms (from juno to luna).</description>
       </external-property>
     </entry>
     <entry>
-      <string>touchStoneCombinationFilter</string>
-      <string-property>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
-    </entry>
-    <entry>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -480,17 +335,17 @@ on all supported target platforms (from juno to luna).</description>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
-  <createdBy>laurent.redor@obeo.fr</createdBy>
-  <creationTime>1432885427165</creationTime>
+  <createdBy>cedric.brun@obeo.fr</createdBy>
+  <creationTime>1434036202627</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
@@ -502,9 +357,10 @@ on all supported target platforms (from juno to luna).</description>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
   <builders/>
-  <axes/>
-  <runSequentially>false</runSequentially>
-</matrix-project>
+  <publishers/>
+  <buildWrappers/>
+</project>

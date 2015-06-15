@@ -157,6 +157,13 @@
       </external-property>
     </entry>
     <entry>
+      <string>hudson-plugins-sonar-SonarPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-analysis-collector-AnalysisPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -179,11 +186,6 @@
                 <description></description>
                 <defaultValue>false</defaultValue>
               </hudson.model.BooleanParameterDefinition>
-              <hudson.model.StringParameterDefinition>
-                <name>SWT_GTK3</name>
-                <description></description>
-                <defaultValue>0</defaultValue>
-              </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
         </originalValue>
@@ -273,7 +275,9 @@ rm -rf &quot;$WORKSPACEp/lugins/org.eclipse.sirius.tests.swtbot/screenshots&quot
 sleep 1
 /usr/bin/metacity-message disable-keybindings
 
-export SWT_GTK3=0</command>
+export SWT_GTK3=0
+
+</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <config>
@@ -313,6 +317,7 @@ integration-test
     <entry>
       <string>jdk</string>
       <string-property>
+        <originalValue class="string">(Hérite du job)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -480,8 +485,8 @@ integration-test
   <creationTime>1412320946364</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>

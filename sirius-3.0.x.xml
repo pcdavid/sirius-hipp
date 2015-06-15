@@ -2,14 +2,14 @@
 <matrix-project>
   <actions/>
   <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;&#xd;
-from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;&#xd;
-on all supported target platforms (from juno to mars).</description>
+from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt;&#xd;
+on all supported target platforms.</description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -30,8 +30,8 @@ on all supported target platforms (from juno to mars).</description>
       <string>logRotator</string>
       <log-rotator-property>
         <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>14</daysToKeep>
-          <numToKeep>-1</numToKeep>
+          <daysToKeep>5</daysToKeep>
+          <numToKeep>30</numToKeep>
           <artifactDaysToKeep>-1</artifactDaysToKeep>
           <artifactNumToKeep>-1</artifactNumToKeep>
         </originalValue>
@@ -52,13 +52,6 @@ on all supported target platforms (from juno to mars).</description>
       </boolean-property>
     </entry>
     <entry>
-      <string>hudson-plugins-git-GitPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -66,17 +59,10 @@ on all supported target platforms (from juno to mars).</description>
       </external-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
+      <string>hudson-plugins-git-GitPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -97,15 +83,27 @@ on all supported target platforms (from juno to mars).</description>
       </axis-list-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Mailer</string>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <string>hudson-tasks-Mailer</string>
       <external-property>
+        <originalValue class="hudson.tasks.Mailer">
+          <recipients>pierre-charles.david@obeo.fr laurent.redor@obeo.fr cedric.brun@obeo.fr</recipients>
+          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+          <sendToIndividuals>false</sendToIndividuals>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
@@ -118,6 +116,13 @@ on all supported target platforms (from juno to mars).</description>
       </boolean-property>
     </entry>
     <entry>
+      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>combinationFilter</string>
       <string-property>
         <propertyOverridden>false</propertyOverridden>
@@ -127,18 +132,18 @@ on all supported target platforms (from juno to mars).</description>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Fingerprinter</string>
+      <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-locksandlatches-LockWrapper</string>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
@@ -148,30 +153,20 @@ on all supported target platforms (from juno to mars).</description>
       <string>hudson-plugins-analysis-collector-AnalysisPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-plugins-sonar-SonarPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList">
-          <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-              <hudson.model.StringParameterDefinition>
-                <name>GERRIT_REFSPEC</name>
-                <description></description>
-                <defaultValue>refs/heads/master</defaultValue>
-              </hudson.model.StringParameterDefinition>
-            </parameterDefinitions>
-          </hudson.model.ParametersDefinitionProperty>
-        </originalValue>
+        <originalValue class="hudson.util.CopyOnWriteList"/>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>
@@ -179,14 +174,14 @@ on all supported target platforms (from juno to mars).</description>
       <string>hudson-tasks-JavadocArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-plugins-build_timeout-BuildTimeoutWrapper</string>
       <external-property>
         <originalValue class="hudson.plugins.build_timeout.BuildTimeoutWrapper">
-          <timeoutMinutes>60</timeoutMinutes>
+          <timeoutMinutes>50</timeoutMinutes>
           <failBuild>false</failBuild>
           <writingDescription>false</writingDescription>
           <timeoutPercentage>150</timeoutPercentage>
@@ -213,12 +208,15 @@ on all supported target platforms (from juno to mars).</description>
       <string>hudson-tasks-BuildTrigger</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-triggers-SCMTrigger</string>
       <trigger-property>
+        <originalValue class="hudson.triggers.SCMTrigger">
+          <spec>@hourly</spec>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
@@ -229,7 +227,8 @@ on all supported target platforms (from juno to mars).</description>
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
+              <goals>clean
+verify</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
@@ -246,6 +245,7 @@ on all supported target platforms (from juno to mars).</description>
                 <string>headless</string>
                 <string>full</string>
                 <string>pack</string>
+                <string>sign</string>
               </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
@@ -257,13 +257,7 @@ on all supported target platforms (from juno to mars).</description>
             </config>
           </maven-builder>
           <hudson.tasks.Shell>
-            <command>if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
-  STREAM=&quot;latest&quot;
-else
-  STREAM=$(echo &quot;$GERRIT_BRANCH&quot; | sed -e &apos;s/v//&apos;)
-fi
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
-</command>
+            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/3.0.x/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <config>
@@ -281,6 +275,10 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles>
+                <string>pack</string>
+                <string>sign</string>
+              </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
@@ -290,6 +288,10 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
               <toolChainsId>NONE</toolChainsId>
             </config>
           </maven-builder>
+          <hudson.tasks.Shell>
+            <command>sh &quot;$WORKSPACE/releng/org.eclipse.sirius.releng/publish-nightly.sh&quot;
+</command>
+          </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
@@ -302,23 +304,16 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
       </string-property>
     </entry>
     <entry>
-      <string>touchStoneResultCondition</string>
-      <result-property>
-        <propertyOverridden>false</propertyOverridden>
-      </result-property>
-    </entry>
-    <entry>
       <string>appointedNode</string>
       <base-property>
         <propertyOverridden>false</propertyOverridden>
       </base-property>
     </entry>
     <entry>
-      <string>hudson-tasks-ArtifactArchiver</string>
-      <external-property>
+      <string>touchStoneResultCondition</string>
+      <result-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
+      </result-property>
     </entry>
     <entry>
       <string>concurrentBuild</string>
@@ -328,49 +323,21 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
       </boolean-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
-      <trigger-property>
+      <string>hudson-tasks-ArtifactArchiver</string>
+      <external-property>
+        <originalValue class="hudson.tasks.ArtifactArchiver">
+          <artifacts>packaging/org.eclipse.sirius.update/target/org.eclipse.sirius.update-*.zip, packaging/org.eclipse.sirius.tests.update/target/org.eclipse.sirius.tests.update-*.zip</artifacts>
+          <compressionType>GZIP</compressionType>
+          <latestOnly>true</latestOnly>
+          <autoValidateFileMask>false</autoValidateFileMask>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
-      <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
+      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
       <trigger-property>
-        <originalValue class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger">
-          <spec></spec>
-          <gerritProjects>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-              <compareType>ANT</compareType>
-              <pattern>sirius/org.eclipse.sirius</pattern>
-              <branches>
-                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-                  <compareType>ANT</compareType>
-                  <pattern>master</pattern>
-                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-                  <compareType>ANT</compareType>
-                  <pattern>v3.0.x</pattern>
-                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-              </branches>
-            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
-          </gerritProjects>
-          <silentMode>false</silentMode>
-          <escapeQuotes>true</escapeQuotes>
-          <buildStartMessage></buildStartMessage>
-          <buildFailureMessage></buildFailureMessage>
-          <buildSuccessfulMessage></buildSuccessfulMessage>
-          <buildUnstableMessage></buildUnstableMessage>
-          <buildNotBuiltMessage></buildNotBuiltMessage>
-          <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
-          <customUrl></customUrl>
-          <triggerOnEvents>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent/>
-            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
-          </triggerOnEvents>
-          <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
-          <triggerConfigURL></triggerConfigURL>
-          <triggerInformationAction/>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
@@ -382,6 +349,12 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
       </boolean-property>
     </entry>
     <entry>
+      <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
+      <trigger-property>
+        <propertyOverridden>false</propertyOverridden>
+      </trigger-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
       <external-property>
         <originalValue class="hudson.plugins.timestamper.TimestamperBuildWrapper"/>
@@ -391,13 +364,6 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
     </entry>
     <entry>
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -423,9 +389,10 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
               <pushURIs/>
               <fetch>
                 <org.eclipse.jgit.transport.RefSpec>
-                  <force>false</force>
-                  <wildcard>false</wildcard>
-                  <srcName>$GERRIT_REFSPEC</srcName>
+                  <force>true</force>
+                  <wildcard>true</wildcard>
+                  <srcName>refs/heads/*</srcName>
+                  <dstName>refs/remotes/origin/*</dstName>
                 </org.eclipse.jgit.transport.RefSpec>
               </fetch>
               <push/>
@@ -439,7 +406,7 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
           </remoteRepositories>
           <branches>
             <hudson.plugins.git.BranchSpec>
-              <name>**</name>
+              <name>v3.0.x</name>
             </hudson.plugins.git.BranchSpec>
           </branches>
           <mergeOptions/>
@@ -451,9 +418,7 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
           <pruneBranches>false</pruneBranches>
           <remotePoll>false</remotePoll>
           <ignoreNotifyCommit>false</ignoreNotifyCommit>
-          <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser">
-            <separator>#</separator>
-          </buildChooser>
+          <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
           <gitTool>Default</gitTool>
           <browser class="hudson.plugins.git.browser.CGit">
             <url>http://git.eclipse.org/c/sirius/org.eclipse.sirius.git/</url>
@@ -469,6 +434,13 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
     </entry>
     <entry>
       <string>touchStoneCombinationFilter</string>
@@ -492,7 +464,7 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1426867073773</creationTime>
+  <creationTime>1433948427674</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
