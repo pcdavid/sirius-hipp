@@ -177,11 +177,6 @@ on last supported target platforms (luna).</description>
         <originalValue class="hudson.util.CopyOnWriteList">
           <hudson.model.ParametersDefinitionProperty>
             <parameterDefinitions>
-              <hudson.model.StringParameterDefinition>
-                <name>GERRIT_REFSPEC</name>
-                <description></description>
-                <defaultValue>refs/heads/master</defaultValue>
-              </hudson.model.StringParameterDefinition>
               <hudson.model.BooleanParameterDefinition>
                 <name>tests.skipLongTests</name>
                 <description></description>

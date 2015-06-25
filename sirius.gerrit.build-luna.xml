@@ -160,17 +160,7 @@ on all supported target platforms (from juno to luna).</description>
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList">
-          <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-              <hudson.model.StringParameterDefinition>
-                <name>GERRIT_REFSPEC</name>
-                <description></description>
-                <defaultValue>refs/heads/master</defaultValue>
-              </hudson.model.StringParameterDefinition>
-            </parameterDefinitions>
-          </hudson.model.ParametersDefinitionProperty>
-        </originalValue>
+        <originalValue class="hudson.util.CopyOnWriteList"/>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>

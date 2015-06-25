@@ -53,13 +53,6 @@ Example :&#xd;
       </boolean-property>
     </entry>
     <entry>
-      <string>hudson-plugins-git-GitPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -67,7 +60,7 @@ Example :&#xd;
       </external-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
+      <string>hudson-plugins-git-GitPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -84,14 +77,14 @@ Example :&#xd;
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Mailer</string>
+      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <string>hudson-tasks-Mailer</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -103,6 +96,13 @@ Example :&#xd;
         <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
+    </entry>
+    <entry>
+      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -117,13 +117,6 @@ Example :&#xd;
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Fingerprinter</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -131,7 +124,7 @@ Example :&#xd;
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-sonar-SonarPublisher</string>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -139,6 +132,13 @@ Example :&#xd;
     </entry>
     <entry>
       <string>hudson-plugins-analysis-collector-AnalysisPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-sonar-SonarPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -263,6 +263,13 @@ Example :&#xd;
       </base-property>
     </entry>
     <entry>
+      <string>concurrentBuild</string>
+      <boolean-property>
+        <originalValue class="boolean">false</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
@@ -274,13 +281,6 @@ Example :&#xd;
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
-    </entry>
-    <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
     </entry>
     <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
@@ -303,13 +303,6 @@ Example :&#xd;
     </entry>
     <entry>
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -379,6 +372,13 @@ Example :&#xd;
       </scm-property>
     </entry>
     <entry>
+      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -397,16 +397,15 @@ Example :&#xd;
   <creationTime>1387188220758</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:anonymous</permission>
       <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:anonymous</permission>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
