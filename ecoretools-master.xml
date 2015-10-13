@@ -8,8 +8,8 @@
 &lt;/ul&gt;&#xd;
 Example :&#xd;
 &lt;ul&gt;&#xd;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.0.x/luna&lt;/li&gt;&#xd;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.0.0/luna/all-in-one&lt;/li&gt;&#xd;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.1.x/mars&lt;/li&gt;&#xd;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.1.0/mars/all-in-one&lt;/li&gt;&#xd;
 &lt;/ul&gt;</description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
@@ -166,6 +166,7 @@ Example :&#xd;
                 <description></description>
                 <choices class="java.util.Arrays$ArrayList">
                   <a class="string-array">
+                    <string>mars</string>
                     <string>luna</string>
                     <string>kepler</string>
                     <string>juno</string>

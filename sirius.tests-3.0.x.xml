@@ -482,7 +482,7 @@ integration-test
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
         <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>@daily</spec>
+          <spec>0 20 * * * *</spec>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>

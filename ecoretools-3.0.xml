@@ -1,8 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt; using the bleeding-edge versions of all our dependencies. It is expected that this build will see punctual failures once in a while, but any repeated failures should be investigated to see if they correspond to real integration issues.&#xd;
-</description>
+  <description>Results of this build are published at the locations :&#xd;
+&lt;ul&gt;&#xd;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/STREAM/PLATFORM&lt;/li&gt;&#xd;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/VERSION/PLATFORM/all-in-one&lt;/li&gt;&#xd;
+&lt;/ul&gt;&#xd;
+Example :&#xd;
+&lt;ul&gt;&#xd;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.0.x/luna&lt;/li&gt;&#xd;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.0.0/luna/all-in-one&lt;/li&gt;&#xd;
+&lt;/ul&gt;</description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
@@ -29,8 +37,8 @@
       <string>logRotator</string>
       <log-rotator-property>
         <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>20</daysToKeep>
-          <numToKeep>20</numToKeep>
+          <daysToKeep>-1</daysToKeep>
+          <numToKeep>10</numToKeep>
           <artifactDaysToKeep>-1</artifactDaysToKeep>
           <artifactNumToKeep>-1</artifactNumToKeep>
         </originalValue>
@@ -67,8 +75,11 @@
     <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -81,13 +92,8 @@
     <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
-        <originalValue class="hudson.tasks.Mailer">
-          <recipients>pierre-charles.david@obeo.fr laurent.redor@obeo.fr</recipients>
-          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-          <sendToIndividuals>false</sendToIndividuals>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -107,8 +113,13 @@
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
+        <originalValue class="hudson.tasks.junit.JUnitResultArchiver">
+          <testResults>*/target/surefire-reports/*.xml</testResults>
+          <keepLongStdio>false</keepLongStdio>
+          <testDataPublishers/>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -142,7 +153,30 @@
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList"/>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.BooleanParameterDefinition>
+                <name>BUILD_SIGN</name>
+                <description>Should this build be signed by the Eclipse server or not ?</description>
+                <defaultValue>true</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+              <hudson.model.ChoiceParameterDefinition>
+                <name>PLATFORM</name>
+                <description></description>
+                <choices class="java.util.Arrays$ArrayList">
+                  <a class="string-array">
+                    <string>mars</string>
+                    <string>luna</string>
+                    <string>kepler</string>
+                    <string>juno</string>
+                    <string>indigo</string>
+                  </a>
+                </choices>
+              </hudson.model.ChoiceParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>
@@ -156,16 +190,8 @@
     <entry>
       <string>hudson-plugins-build_timeout-BuildTimeoutWrapper</string>
       <external-property>
-        <originalValue class="hudson.plugins.build_timeout.BuildTimeoutWrapper">
-          <timeoutMinutes>20</timeoutMinutes>
-          <failBuild>false</failBuild>
-          <writingDescription>false</writingDescription>
-          <timeoutPercentage>150</timeoutPercentage>
-          <timeoutType>absolute</timeoutType>
-          <timeoutMinutesElasticDefault>60</timeoutMinutesElasticDefault>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -190,6 +216,9 @@
     <entry>
       <string>hudson-triggers-SCMTrigger</string>
       <trigger-property>
+        <originalValue class="hudson.triggers.SCMTrigger">
+          <spec>12 2 * * *</spec>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
@@ -197,26 +226,15 @@
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
-          <hudson.tasks.Shell>
-            <command>LATEST=$(releng/org.eclipse.sirius.releng/latest-ibuild.sh)
-TARGET_FILE=&quot;releng/org.eclipse.sirius.targets/sirius_canary.target&quot;
-sed -i -e &quot;s|http://download.eclipse.org/eclipse/updates/4.6-I-builds|$LATEST|&quot; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.platform.ide&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.platform.ide&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.platform.sdk&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.platform.sdk&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-</command>
-          </hudson.tasks.Shell>
           <maven-builder>
             <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean verify</goals>
-              <privateRepository>false</privateRepository>
+              <installationId>Maven 3.0.5</installationId>
+              <goals>clean -P$PLATFORM verify -Dmaven.test.failure.ignore=true  --fail-at-end</goals>
+              <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
-              <pomFile>pom.xml</pomFile>
+              <pomFile>org.eclipse.emf.ecoretools.build/pom.xml</pomFile>
               <properties>
-                <entries>
-                  <entry name="platform-version-name" value="canary"/>
-                </entries>
+                <entries/>
               </properties>
               <errors>false</errors>
               <verbosity>NORMAL</verbosity>
@@ -231,6 +249,9 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
               <toolChainsId>NONE</toolChainsId>
             </config>
           </maven-builder>
+          <hudson.tasks.Shell>
+            <command>sh &quot;$WORKSPACE/org.eclipse.emf.ecoretools.build/publish-nightly.sh&quot;</command>
+          </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
@@ -238,7 +259,7 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">(Valeur par défaut)</originalValue>
+        <originalValue class="string">JDK 1.7.0 Latest</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -259,7 +280,7 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>packaging/org.eclipse.sirius.update/target/org.eclipse.sirius.update-*.zip</artifacts>
+          <artifacts>org.eclipse.emf.ecoretools.update/target/org.eclipse.emf.ecoretools.update.zip,org.eclipse.emf.ecoretools.update-all/target/*.zip</artifacts>
           <compressionType>GZIP</compressionType>
           <latestOnly>false</latestOnly>
           <autoValidateFileMask>false</autoValidateFileMask>
@@ -304,9 +325,9 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
               <name>origin</name>
               <uris>
                 <org.eclipse.jgit.transport.URIish>
-                  <scheme>http</scheme>
-                  <path>/gitroot/sirius/org.eclipse.sirius.git</path>
-                  <rawPath>/gitroot/sirius/org.eclipse.sirius.git</rawPath>
+                  <scheme>git</scheme>
+                  <path>/gitroot/ecoretools/org.eclipse.ecoretools.git</path>
+                  <rawPath>/gitroot/ecoretools/org.eclipse.ecoretools.git</rawPath>
                   <port>-1</port>
                   <host>git.eclipse.org</host>
                 </org.eclipse.jgit.transport.URIish>
@@ -331,7 +352,7 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
           </remoteRepositories>
           <branches>
             <hudson.plugins.git.BranchSpec>
-              <name>master</name>
+              <name>3.0</name>
             </hudson.plugins.git.BranchSpec>
           </branches>
           <mergeOptions/>
@@ -345,9 +366,6 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
           <ignoreNotifyCommit>false</ignoreNotifyCommit>
           <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
           <gitTool>Default</gitTool>
-          <browser class="hudson.plugins.git.browser.CGit">
-            <url>http://git.eclipse.org/c/sirius/org.eclipse.sirius.git/</url>
-          </browser>
           <submoduleCfg class="list"/>
           <includedRegions></includedRegions>
           <excludedRegions></excludedRegions>
@@ -377,26 +395,22 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
     <entry>
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
-        <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>@daily</spec>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
-  <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1398332965848</creationTime>
+  <createdBy>cedric.brun@obeo.fr</createdBy>
+  <creationTime>1442500307428</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
