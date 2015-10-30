@@ -50,13 +50,6 @@
       </boolean-property>
     </entry>
     <entry>
-      <string>hudson-plugins-git-GitPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -64,20 +57,10 @@
       </external-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
+      <string>hudson-plugins-git-GitPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -105,6 +88,23 @@
       </axis-list-property>
     </entry>
     <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
         <originalValue class="hudson.tasks.Mailer">
@@ -117,18 +117,18 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>cleanWorkspaceRequired</string>
       <boolean-property>
         <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
+    </entry>
+    <entry>
+      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
       <string>combinationFilter</string>
@@ -149,13 +149,6 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Fingerprinter</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -163,7 +156,7 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-plugins-sonar-SonarPublisher</string>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -174,6 +167,13 @@
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-sonar-SonarPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -328,16 +328,23 @@ integration-test
       </string-property>
     </entry>
     <entry>
+      <string>appointedNode</string>
+      <base-property>
+        <propertyOverridden>false</propertyOverridden>
+      </base-property>
+    </entry>
+    <entry>
       <string>touchStoneResultCondition</string>
       <result-property>
         <propertyOverridden>false</propertyOverridden>
       </result-property>
     </entry>
     <entry>
-      <string>appointedNode</string>
-      <base-property>
+      <string>concurrentBuild</string>
+      <boolean-property>
+        <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
-      </base-property>
+      </boolean-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
@@ -353,20 +360,7 @@ integration-test
       </external-property>
     </entry>
     <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
-    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
-      <trigger-property>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
-    <entry>
-      <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
       <trigger-property>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
@@ -379,6 +373,12 @@ integration-test
       </boolean-property>
     </entry>
     <entry>
+      <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
+      <trigger-property>
+        <propertyOverridden>false</propertyOverridden>
+      </trigger-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
       <external-property>
         <originalValue class="hudson.plugins.timestamper.TimestamperBuildWrapper"/>
@@ -388,13 +388,6 @@ integration-test
     </entry>
     <entry>
       <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -462,6 +455,13 @@ integration-test
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
     </entry>
     <entry>
       <string>touchStoneCombinationFilter</string>
