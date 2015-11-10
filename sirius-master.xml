@@ -329,12 +329,6 @@ verify</goals>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
-        <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>packaging/org.eclipse.sirius.update/target/org.eclipse.sirius.update-*.zip, packaging/org.eclipse.sirius.tests.update/target/org.eclipse.sirius.tests.update-*.zip</artifacts>
-          <compressionType>GZIP</compressionType>
-          <latestOnly>true</latestOnly>
-          <autoValidateFileMask>false</autoValidateFileMask>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>

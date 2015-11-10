@@ -27,6 +27,12 @@
     <entry>
       <string>logRotator</string>
       <log-rotator-property>
+        <originalValue class="hudson.tasks.LogRotator">
+          <daysToKeep>150</daysToKeep>
+          <numToKeep>50</numToKeep>
+          <artifactDaysToKeep>-1</artifactDaysToKeep>
+          <artifactNumToKeep>-1</artifactNumToKeep>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </log-rotator-property>
     </entry>
@@ -233,6 +239,9 @@
     <entry>
       <string>hudson-triggers-SCMTrigger</string>
       <trigger-property>
+        <originalValue class="hudson.triggers.SCMTrigger">
+          <spec>0 20 * * * *</spec>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
@@ -481,9 +490,6 @@ integration-test
     <entry>
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
-        <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>0 20 * * * *</spec>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
