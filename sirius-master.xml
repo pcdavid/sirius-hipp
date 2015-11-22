@@ -72,7 +72,6 @@ on all supported target platforms.</description>
           <hudson.matrix.TextAxis>
             <name>PLATFORM</name>
             <values>
-              <string>juno</string>
               <string>kepler</string>
               <string>luna</string>
               <string>mars</string>

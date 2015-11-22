@@ -75,6 +75,12 @@
       <external-property>
         <originalValue class="hudson.plugins.xvnc.Xvnc">
           <takeScreenshot>false</takeScreenshot>
+          <allocator>
+            <allocatedNumbers/>
+            <blacklistedNumbers/>
+            <minDisplayNumber>10</minDisplayNumber>
+            <maxDisplayNumber>999</maxDisplayNumber>
+          </allocator>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
@@ -262,10 +268,12 @@ package
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles/>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
               <makeMode>NONE</makeMode>
+              <projects/>
               <settingsId>NONE</settingsId>
               <globalSettingsId>NONE</globalSettingsId>
               <toolChainsId>NONE</toolChainsId>
@@ -311,6 +319,7 @@ integration-test
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
               <makeMode>NONE</makeMode>
+              <projects/>
               <settingsId>NONE</settingsId>
               <globalSettingsId>NONE</globalSettingsId>
               <toolChainsId>NONE</toolChainsId>
@@ -497,7 +506,7 @@ integration-test
   </cascading-job-properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <concurrentBuild>false</concurrentBuild>

@@ -400,6 +400,10 @@ export SWT_GTK3=0</command>
                   <compareType>ANT</compareType>
                   <pattern>v3.0.x</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                  <compareType>ANT</compareType>
+                  <pattern>v3.1.x</pattern>
+                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           </gerritProjects>
