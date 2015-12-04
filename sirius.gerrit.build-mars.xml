@@ -303,7 +303,7 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
+        <originalValue class="string">(Inherit From Job)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -358,15 +358,15 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
               <branches>
                 <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
                   <compareType>ANT</compareType>
-                  <pattern>master</pattern>
-                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
-                  <compareType>ANT</compareType>
                   <pattern>v3.0.x</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
                 <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
                   <compareType>ANT</compareType>
                   <pattern>v3.1.x</pattern>
+                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                  <compareType>ANT</compareType>
+                  <pattern>master</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>

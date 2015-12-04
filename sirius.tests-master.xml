@@ -83,6 +83,12 @@
               <string>swtbot-part2</string>
             </values>
           </hudson.matrix.TextAxis>
+          <hudson.matrix.JDKAxis>
+            <name>jdk</name>
+            <values>
+              <string>JDK-1.8.0</string>
+            </values>
+          </hudson.matrix.JDKAxis>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>

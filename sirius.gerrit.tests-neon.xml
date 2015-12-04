@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <matrix-project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;&#xd;
-from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt;&#xd;
-on all supported target platforms.</description>
+  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; and launchs associated tests&#xd;
+from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;&#xd;
+on last supported target platforms (neon).</description>
   <project-properties class="java.util.concurrent.ConcurrentHashMap">
     <entry>
       <string>hudson-plugins-dry-DryPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
@@ -30,8 +30,8 @@ on all supported target platforms.</description>
       <string>logRotator</string>
       <log-rotator-property>
         <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>5</daysToKeep>
-          <numToKeep>30</numToKeep>
+          <daysToKeep>14</daysToKeep>
+          <numToKeep>-1</numToKeep>
           <artifactDaysToKeep>-1</artifactDaysToKeep>
           <artifactNumToKeep>-1</artifactNumToKeep>
         </originalValue>
@@ -52,13 +52,6 @@ on all supported target platforms.</description>
       </boolean-property>
     </entry>
     <entry>
-      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>hudson-plugins-git-GitPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
@@ -66,31 +59,7 @@ on all supported target platforms.</description>
       </external-property>
     </entry>
     <entry>
-      <string>axes</string>
-      <axis-list-property>
-        <originalValue class="hudson.matrix.AxisList">
-          <hudson.matrix.TextAxis>
-            <name>PLATFORM</name>
-            <values>
-              <string>juno</string>
-              <string>kepler</string>
-              <string>luna</string>
-              <string>mars</string>
-              <string>neon</string>
-            </values>
-          </hudson.matrix.TextAxis>
-          <hudson.matrix.JDKAxis>
-            <name>jdk</name>
-            <values>
-              <string>JDK-1.8.0</string>
-            </values>
-          </hudson.matrix.JDKAxis>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </axis-list-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
+      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -100,17 +69,51 @@ on all supported target platforms.</description>
       <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
+        <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
     </entry>
     <entry>
+      <string>axes</string>
+      <axis-list-property>
+        <originalValue class="hudson.matrix.AxisList">
+          <hudson.matrix.TextAxis>
+            <name>PLATFORM</name>
+            <values>
+              <string>neon</string>
+            </values>
+          </hudson.matrix.TextAxis>
+          <hudson.matrix.TextAxis>
+            <name>SUITE</name>
+            <values>
+              <string>gerrit-junit</string>
+              <string>gerrit-swtbot</string>
+              <string>gerrit-swtbot-sequence</string>
+            </values>
+          </hudson.matrix.TextAxis>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </axis-list-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
-        <originalValue class="hudson.tasks.Mailer">
-          <recipients>pierre-charles.david@obeo.fr laurent.redor@obeo.fr cedric.brun@obeo.fr</recipients>
-          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-          <sendToIndividuals>false</sendToIndividuals>
-        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
+      <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
@@ -123,13 +126,6 @@ on all supported target platforms.</description>
       </boolean-property>
     </entry>
     <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>combinationFilter</string>
       <string-property>
         <propertyOverridden>false</propertyOverridden>
@@ -137,6 +133,18 @@ on all supported target platforms.</description>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
+      <external-property>
+        <originalValue class="hudson.tasks.junit.JUnitResultArchiver">
+          <testResults>plugins/*.test*/target/surefire-reports/*.xml</testResults>
+          <keepLongStdio>false</keepLongStdio>
+          <testDataPublishers/>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-tasks-Fingerprinter</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
@@ -146,13 +154,6 @@ on all supported target platforms.</description>
       <string>hudson-plugins-locksandlatches-LockWrapper</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-Fingerprinter</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
     </entry>
@@ -160,20 +161,45 @@ on all supported target platforms.</description>
       <string>hudson-plugins-analysis-collector-AnalysisPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-plugins-sonar-SonarPublisher</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList"/>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.StringParameterDefinition>
+                <name>GERRIT_REFSPEC</name>
+                <description></description>
+                <defaultValue>refs/heads/master</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.BooleanParameterDefinition>
+                <name>tests.skipLongTests</name>
+                <description></description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+              <hudson.model.BooleanParameterDefinition>
+                <name>tests.skipUnreliableTests</name>
+                <description></description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>SWT_GTK3</name>
+                <description></description>
+                <defaultValue>0</defaultValue>
+              </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
     </entry>
@@ -181,14 +207,14 @@ on all supported target platforms.</description>
       <string>hudson-tasks-JavadocArchiver</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-plugins-build_timeout-BuildTimeoutWrapper</string>
       <external-property>
         <originalValue class="hudson.plugins.build_timeout.BuildTimeoutWrapper">
-          <timeoutMinutes>50</timeoutMinutes>
+          <timeoutMinutes>180</timeoutMinutes>
           <failBuild>false</failBuild>
           <writingDescription>false</writingDescription>
           <timeoutPercentage>150</timeoutPercentage>
@@ -215,15 +241,12 @@ on all supported target platforms.</description>
       <string>hudson-tasks-BuildTrigger</string>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
+        <modified>false</modified>
       </external-property>
     </entry>
     <entry>
       <string>hudson-triggers-SCMTrigger</string>
       <trigger-property>
-        <originalValue class="hudson.triggers.SCMTrigger">
-          <spec>@hourly</spec>
-        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
@@ -231,17 +254,10 @@ on all supported target platforms.</description>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
-          <hudson.tasks.Shell>
-            <command>if [ -f ./releng/org.eclipse.sirius.releng/checks.sh ]; then
-  sh ./releng/org.eclipse.sirius.releng/checks.sh
-fi
-</command>
-          </hudson.tasks.Shell>
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean
-verify</goals>
+              <goals>clean package -B</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
@@ -254,12 +270,6 @@ verify</goals>
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <profiles>
-                <string>headless</string>
-                <string>full</string>
-                <string>incubation</string>
-                <string>sign</string>
-              </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
@@ -270,12 +280,28 @@ verify</goals>
             </config>
           </maven-builder>
           <hudson.tasks.Shell>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
+            <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
+if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
+  STREAM=&quot;latest&quot;
+else
+  STREAM=$(echo &quot;$GERRIT_BRANCH&quot; | sed -e &apos;s/v//&apos;)
+fi
+sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+
+# Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
+rm -rf &quot;$WORKSPACEp/lugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
+
+# Make sure we have a properly configured window manager for SWTbot tests
+/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
+sleep 1
+/usr/bin/metacity-message disable-keybindings
+
+export SWT_GTK3=0</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
+              <goals>clean integration-test -B</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
@@ -288,6 +314,9 @@ verify</goals>
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles>
+                <string>$SUITE</string>
+              </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
@@ -297,10 +326,6 @@ verify</goals>
               <toolChainsId>NONE</toolChainsId>
             </config>
           </maven-builder>
-          <hudson.tasks.Shell>
-            <command>sh ./releng/org.eclipse.sirius.releng/publish-nightly.sh
-</command>
-          </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
@@ -308,9 +333,15 @@ verify</goals>
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
+        <originalValue class="string">(Inherit From Job)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
+    </entry>
+    <entry>
+      <string>touchStoneResultCondition</string>
+      <result-property>
+        <propertyOverridden>false</propertyOverridden>
+      </result-property>
     </entry>
     <entry>
       <string>appointedNode</string>
@@ -319,10 +350,17 @@ verify</goals>
       </base-property>
     </entry>
     <entry>
-      <string>touchStoneResultCondition</string>
-      <result-property>
+      <string>hudson-tasks-ArtifactArchiver</string>
+      <external-property>
+        <originalValue class="hudson.tasks.ArtifactArchiver">
+          <artifacts>plugins/*.test*/target/work/data/.metadata/*log</artifacts>
+          <compressionType>NONE</compressionType>
+          <latestOnly>false</latestOnly>
+          <autoValidateFileMask>false</autoValidateFileMask>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
-      </result-property>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
       <string>concurrentBuild</string>
@@ -332,15 +370,39 @@ verify</goals>
       </boolean-property>
     </entry>
     <entry>
-      <string>hudson-tasks-ArtifactArchiver</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
       <trigger-property>
+        <propertyOverridden>false</propertyOverridden>
+      </trigger-property>
+    </entry>
+    <entry>
+      <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
+      <trigger-property>
+        <originalValue class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger">
+          <spec></spec>
+          <gerritProjects>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+              <compareType>ANT</compareType>
+              <pattern>sirius/org.eclipse.sirius</pattern>
+            </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
+          </gerritProjects>
+          <silentMode>false</silentMode>
+          <escapeQuotes>true</escapeQuotes>
+          <buildStartMessage></buildStartMessage>
+          <buildFailureMessage></buildFailureMessage>
+          <buildSuccessfulMessage></buildSuccessfulMessage>
+          <buildUnstableMessage></buildUnstableMessage>
+          <buildNotBuiltMessage></buildNotBuiltMessage>
+          <buildUnsuccessfulFilepath></buildUnsuccessfulFilepath>
+          <customUrl></customUrl>
+          <triggerOnEvents>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginPatchsetCreatedEvent/>
+            <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.events.PluginDraftPublishedEvent/>
+          </triggerOnEvents>
+          <dynamicTriggerConfiguration>false</dynamicTriggerConfiguration>
+          <triggerConfigURL></triggerConfigURL>
+          <triggerInformationAction/>
+        </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
     </entry>
@@ -350,12 +412,6 @@ verify</goals>
         <originalValue class="boolean">false</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </boolean-property>
-    </entry>
-    <entry>
-      <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
-      <trigger-property>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
     </entry>
     <entry>
       <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
@@ -370,6 +426,13 @@ verify</goals>
       <external-property>
         <propertyOverridden>false</propertyOverridden>
         <modified>false</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
+      <external-property>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
       </external-property>
     </entry>
     <entry>
@@ -392,10 +455,9 @@ verify</goals>
               <pushURIs/>
               <fetch>
                 <org.eclipse.jgit.transport.RefSpec>
-                  <force>true</force>
-                  <wildcard>true</wildcard>
-                  <srcName>refs/heads/*</srcName>
-                  <dstName>refs/remotes/origin/*</dstName>
+                  <force>false</force>
+                  <wildcard>false</wildcard>
+                  <srcName>$GERRIT_REFSPEC</srcName>
                 </org.eclipse.jgit.transport.RefSpec>
               </fetch>
               <push/>
@@ -409,7 +471,7 @@ verify</goals>
           </remoteRepositories>
           <branches>
             <hudson.plugins.git.BranchSpec>
-              <name>master</name>
+              <name>**</name>
             </hudson.plugins.git.BranchSpec>
           </branches>
           <mergeOptions/>
@@ -421,7 +483,9 @@ verify</goals>
           <pruneBranches>false</pruneBranches>
           <remotePoll>false</remotePoll>
           <ignoreNotifyCommit>false</ignoreNotifyCommit>
-          <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+          <buildChooser class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTriggerBuildChooser">
+            <separator>#</separator>
+          </buildChooser>
           <gitTool>Default</gitTool>
           <browser class="hudson.plugins.git.browser.CGit">
             <url>http://git.eclipse.org/c/sirius/org.eclipse.sirius.git/</url>
@@ -437,13 +501,6 @@ verify</goals>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
     </entry>
     <entry>
       <string>touchStoneCombinationFilter</string>
@@ -466,17 +523,17 @@ verify</goals>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
-  <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1378933280368</creationTime>
+  <createdBy>florian.barbin@obeo.fr</createdBy>
+  <creationTime>1448449296524</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
