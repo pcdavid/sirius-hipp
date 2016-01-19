@@ -268,7 +268,7 @@ verify</goals>
             </config>
           </maven-builder>
           <hudson.tasks.Shell>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/3.1.3.100-x/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
+            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/3.1.3.100/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <config>
@@ -309,7 +309,7 @@ verify</goals>
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
+        <originalValue class="string">(Inherit From Job)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -477,13 +477,13 @@ verify</goals>
   <creationTime>1450257650234</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
