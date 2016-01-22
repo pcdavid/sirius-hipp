@@ -4,21 +4,7 @@
   <description>This job uses jstack on every java process owned by the sirius HIPP user to dump its thread state in the console.&#xd;
 &#xd;
 This is usefull if you need some insights regarding a deadlock occuring during the CI for instance.</description>
-  <project-properties class="java.util.concurrent.ConcurrentHashMap">
-    <entry>
-      <string>hudson-plugins-dry-DryPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>blockBuildWhenDownstreamBuilding</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
+  <project-properties class="concurrent-hash-map">
     <entry>
       <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
       <base-property>
@@ -27,152 +13,11 @@ This is usefull if you need some insights regarding a deadlock occuring during t
       </base-property>
     </entry>
     <entry>
-      <string>logRotator</string>
-      <log-rotator-property>
-        <propertyOverridden>false</propertyOverridden>
-      </log-rotator-property>
-    </entry>
-    <entry>
-      <string>scmCheckoutRetryCount</string>
-      <integer-property>
-        <propertyOverridden>false</propertyOverridden>
-      </integer-property>
-    </entry>
-    <entry>
-      <string>blockBuildWhenUpstreamBuilding</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-git-GitPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyNotifier</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactArchiver</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-Mailer</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-test-AggregatedTestResultPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>cleanWorkspaceRequired</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-junit-JUnitResultArchiver</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-Fingerprinter</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-locksandlatches-LockWrapper</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-analysis-collector-AnalysisPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>parametersDefinitionProperties</string>
-      <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList"/>
-        <propertyOverridden>false</propertyOverridden>
-      </copy-write-list-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-JavadocArchiver</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-build_timeout-BuildTimeoutWrapper</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>customWorkspace</string>
-      <string-property>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
-    </entry>
-    <entry>
-      <string>quietPeriod</string>
-      <integer-property>
-        <propertyOverridden>false</propertyOverridden>
-      </integer-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-BuildTrigger</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-triggers-SCMTrigger</string>
-      <trigger-property>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
-    <entry>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
+            <disabled>false</disabled>
             <command>echo &apos;##################### Java Processes ##################################&apos;
 ps -ef | grep java |grep sirius 
 echo &apos;##################### Java processes states ###########################&apos;
@@ -191,77 +36,11 @@ for i in $(ps -ef | grep java |grep sirius| awk &apos;{print $2}&apos;); do echo
       </string-property>
     </entry>
     <entry>
-      <string>appointedNode</string>
-      <base-property>
-        <propertyOverridden>false</propertyOverridden>
-      </base-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-ArtifactArchiver</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">false</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
-    <entry>
-      <string>org-hudsonci-maven-plugin-dependencymonitor-DependencyTrigger</string>
-      <trigger-property>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
-    <entry>
-      <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
-      <trigger-property>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-parameterizedtrigger-BuildTrigger</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-findbugs-FindBugsPublisher</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>scm</string>
       <scm-property>
         <originalValue class="hudson.scm.NullSCM"/>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
-    </entry>
-    <entry>
-      <string>org-hudsonci-maven-plugin-artifactrecorder-ArtifactFingerprinter</string>
-      <external-property>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>false</modified>
-      </external-property>
-    </entry>
-    <entry>
-      <string>hudson-triggers-TimerTrigger</string>
-      <trigger-property>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
@@ -269,13 +48,13 @@ for i in $(ps -ef | grep java |grep sirius| awk &apos;{print $2}&apos;); do echo
   <creationTime>1412002371715</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
@@ -289,5 +68,4 @@ for i in $(ps -ef | grep java |grep sirius| awk &apos;{print $2}&apos;); do echo
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
-  <builders/>
 </project>
