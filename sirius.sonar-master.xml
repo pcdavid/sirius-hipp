@@ -39,7 +39,7 @@
           <jdk>(Hérite du job)</jdk>
           <branch></branch>
           <language></language>
-          <mavenOpts>-XX:MaxPermSize=128m -Xmx2g</mavenOpts>
+          <mavenOpts></mavenOpts>
           <jobAdditionalProperties>-P headless -P full -Dmaven.repo.local=$WORKSPACE/.maven/repo -Djava.io.tmpdir=$WORKSPACE/.maven/tmp -Dsonar.language=java</jobAdditionalProperties>
           <mavenInstallationName>apache-maven-latest</mavenInstallationName>
           <rootPom>packaging/org.eclipse.sirius.parent/pom.xml</rootPom>
@@ -67,6 +67,11 @@
                   </a>
                 </choices>
               </hudson.model.ChoiceParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>MAVEN_OPTS</name>
+                <description>MAVEN_OPTS due to bug 474406</description>
+                <defaultValue>-XX:MaxPermSize=128m -Xmx2g</defaultValue>
+              </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
         </originalValue>
@@ -210,20 +215,20 @@
   <creationTime>1428994556897</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

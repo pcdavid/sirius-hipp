@@ -23,6 +23,16 @@
       </log-rotator-property>
     </entry>
     <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -51,16 +61,6 @@
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-Mailer</string>
@@ -143,8 +143,9 @@ package
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!g&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 
 # Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
 rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
@@ -155,7 +156,6 @@ sleep 1
 /usr/bin/metacity-message disable-keybindings
 
 export SWT_GTK3=0
-
 </command>
           </hudson.tasks.Shell>
           <maven-builder>
@@ -193,13 +193,6 @@ integration-test
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
-    </entry>
-    <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
@@ -301,15 +294,15 @@ integration-test
   <creationTime>1412320946364</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

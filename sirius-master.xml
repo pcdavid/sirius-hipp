@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <matrix-project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;&#xd;
-from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt;&#xd;
+  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;
+from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt;
 on all supported target platforms.</description>
   <project-properties class="concurrent-hash-map">
     <entry>
@@ -90,6 +90,7 @@ on all supported target platforms.</description>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command>if [ -f ./releng/org.eclipse.sirius.releng/checks.sh ]; then
   sh ./releng/org.eclipse.sirius.releng/checks.sh
 fi
@@ -130,7 +131,8 @@ verify</goals>
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
-            <command>sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!g&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
+            <description></description>
+            <command>sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!g&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <disabled>false</disabled>
@@ -160,19 +162,13 @@ verify</goals>
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command>sh ./releng/org.eclipse.sirius.releng/publish-nightly.sh
 </command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
-    </entry>
-    <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
     </entry>
     <entry>
       <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
@@ -255,13 +251,13 @@ verify</goals>
   <creationTime>1378933280368</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
