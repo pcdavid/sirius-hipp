@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<project>
+<matrix-project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt; using the bleeding-edge versions of all our dependencies. It is expected that this build will see punctual failures once in a while, but any repeated failures should be investigated to see if they correspond to real integration issues.&#xd;
-</description>
+  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; on older platform versions, which are not officialy supported anymore.</description>
   <project-properties class="concurrent-hash-map">
     <entry>
       <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
@@ -15,8 +14,8 @@
       <string>logRotator</string>
       <log-rotator-property>
         <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>20</daysToKeep>
-          <numToKeep>20</numToKeep>
+          <daysToKeep>5</daysToKeep>
+          <numToKeep>5</numToKeep>
           <artifactDaysToKeep>-1</artifactDaysToKeep>
           <artifactNumToKeep>-1</artifactNumToKeep>
         </originalValue>
@@ -24,10 +23,32 @@
       </log-rotator-property>
     </entry>
     <entry>
+      <string>axes</string>
+      <axis-list-property>
+        <originalValue class="hudson.matrix.AxisList">
+          <hudson.matrix.TextAxis>
+            <name>PLATFORM</name>
+            <values>
+              <string>juno</string>
+              <string>kepler</string>
+              <string>luna</string>
+            </values>
+          </hudson.matrix.TextAxis>
+          <hudson.matrix.JDKAxis>
+            <name>jdk</name>
+            <values>
+              <string>JDK-1.8.0</string>
+            </values>
+          </hudson.matrix.JDKAxis>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </axis-list-property>
+    </entry>
+    <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
         <originalValue class="hudson.tasks.Mailer">
-          <recipients>pierre-charles.david@obeo.fr laurent.redor@obeo.fr</recipients>
+          <recipients>pierre-charles.david@obeo.fr laurent.redor@obeo.fr cedric.brun@obeo.fr</recipients>
           <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
           <sendToIndividuals>false</sendToIndividuals>
         </originalValue>
@@ -39,7 +60,7 @@
       <string>hudson-plugins-build_timeout-BuildTimeoutWrapper</string>
       <external-property>
         <originalValue class="hudson.plugins.build_timeout.BuildTimeoutWrapper">
-          <timeoutMinutes>20</timeoutMinutes>
+          <timeoutMinutes>50</timeoutMinutes>
           <failBuild>false</failBuild>
           <writingDescription>false</writingDescription>
           <timeoutPercentage>150</timeoutPercentage>
@@ -51,30 +72,77 @@
       </external-property>
     </entry>
     <entry>
+      <string>hudson-triggers-SCMTrigger</string>
+      <trigger-property>
+        <originalValue class="hudson.triggers.SCMTrigger">
+          <spec>@daily</spec>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </trigger-property>
+    </entry>
+    <entry>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
             <disabled>false</disabled>
-            <command>LATEST=$(releng/org.eclipse.sirius.releng/latest-ibuild.sh)
-TARGET_FILE=&quot;releng/org.eclipse.sirius.targets/sirius_canary.target&quot;
-sed -i -e &quot;s|http://download.eclipse.org/eclipse/updates/4.6-I-builds|$LATEST|&quot; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.platform.ide&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.platform.ide&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.platform.sdk&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.platform.sdk&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
+            <description></description>
+            <command>if [ -f ./releng/org.eclipse.sirius.releng/checks.sh ]; then
+  sh ./releng/org.eclipse.sirius.releng/checks.sh
+fi
 </command>
           </hudson.tasks.Shell>
           <maven-builder>
             <disabled>false</disabled>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean verify</goals>
-              <privateRepository>false</privateRepository>
+              <goals>clean
+package</goals>
+              <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
-              <pomFile>pom.xml</pomFile>
+              <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
               <properties>
                 <entries>
-                  <entry name="platform-version-name" value="canary"/>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
+                </entries>
+              </properties>
+              <errors>false</errors>
+              <verbosity>NORMAL</verbosity>
+              <offline>false</offline>
+              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles>
+                <string>headless</string>
+                <string>full</string>
+                <string>incubation</string>
+                <string>sign</string>
+              </profiles>
+              <recursive>true</recursive>
+              <checksumMode>NORMAL</checksumMode>
+              <failMode>NORMAL</failMode>
+              <makeMode>NONE</makeMode>
+              <settingsId>NONE</settingsId>
+              <globalSettingsId>NONE</globalSettingsId>
+              <toolChainsId>NONE</toolChainsId>
+            </config>
+          </maven-builder>
+          <hudson.tasks.Shell>
+            <disabled>false</disabled>
+            <description></description>
+            <command>if [ -e &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot; ]; then
+  sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!g&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+fi</command>
+          </hudson.tasks.Shell>
+          <maven-builder>
+            <disabled>false</disabled>
+            <config>
+              <installationId>apache-maven-latest</installationId>
+              <goals>clean package</goals>
+              <privateRepository>true</privateRepository>
+              <privateTmpdir>false</privateTmpdir>
+              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
+              <properties>
+                <entries>
+                  <entry name="platform-version-name" value="$PLATFORM"/>
                 </entries>
               </properties>
               <errors>false</errors>
@@ -95,21 +163,9 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
       </describable-list-property>
     </entry>
     <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">JDK-1.8.0</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
-    </entry>
-    <entry>
-      <string>hudson-tasks-ArtifactArchiver</string>
+      <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
       <external-property>
-        <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>packaging/org.eclipse.sirius.update/target/org.eclipse.sirius.update-*.zip</artifacts>
-          <compressionType>GZIP</compressionType>
-          <latestOnly>false</latestOnly>
-          <autoValidateFileMask>false</autoValidateFileMask>
-        </originalValue>
+        <originalValue class="hudson.plugins.timestamper.TimestamperBuildWrapper"/>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
@@ -181,26 +237,16 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
     </entry>
-    <entry>
-      <string>hudson-triggers-TimerTrigger</string>
-      <trigger-property>
-        <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>@daily</spec>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1398332965848</creationTime>
+  <creationTime>1454577271531</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
@@ -217,4 +263,7 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
-</project>
+  <axes/>
+  <runSequentially>false</runSequentially>
+  <configSubmit>false</configSubmit>
+</matrix-project>

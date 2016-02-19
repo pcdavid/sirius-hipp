@@ -244,13 +244,13 @@
   <creationTime>1423759570682</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

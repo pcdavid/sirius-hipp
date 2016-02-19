@@ -119,11 +119,24 @@ on last supported target platforms (mars).</description>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
+          <hudson.tasks.Shell>
+            <disabled>false</disabled>
+            <description></description>
+            <command># Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
+rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
+
+# Make sure we have a properly configured window manager for SWTbot tests
+/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
+sleep 1
+/usr/bin/metacity-message disable-keybindings
+
+export SWT_GTK3=0</command>
+          </hudson.tasks.Shell>
           <maven-builder>
             <disabled>false</disabled>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean package -B</goals>
+              <goals>clean integration-test -B</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
@@ -136,6 +149,12 @@ on last supported target platforms (mars).</description>
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles>
+                <string>full</string>
+                <string>headless</string>
+                <string>incubation</string>
+                <string>$SUITE</string>
+              </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
@@ -158,17 +177,9 @@ else
     STREAM=$(echo &quot;$STREAM&quot; | sed -e &apos;s/-x//&apos;)
   fi
 fi
-sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
-
-# Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
-rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
-
-# Make sure we have a properly configured window manager for SWTbot tests
-/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
-sleep 1
-/usr/bin/metacity-message disable-keybindings
-
-export SWT_GTK3=0</command>
+if [ -e &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot; ]; then
+   sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+fi</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <disabled>false</disabled>
@@ -347,13 +358,13 @@ export SWT_GTK3=0</command>
   <creationTime>1426867369802</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

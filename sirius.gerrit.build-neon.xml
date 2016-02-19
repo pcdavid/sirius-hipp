@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <matrix-project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;&#xd;
-from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;&#xd;
-on all supported target platforms (from juno to mars).</description>
+  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt;
+from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;
+on all supported target platforms (from mars to neon).</description>
   <project-properties class="concurrent-hash-map">
     <entry>
       <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
@@ -31,12 +31,16 @@ on all supported target platforms (from juno to mars).</description>
           <hudson.matrix.TextAxis>
             <name>PLATFORM</name>
             <values>
-              <string>kepler</string>
-              <string>luna</string>
               <string>mars</string>
               <string>neon</string>
             </values>
           </hudson.matrix.TextAxis>
+          <hudson.matrix.JDKAxis>
+            <name>jdk</name>
+            <values>
+              <string>JDK-1.8.0</string>
+            </values>
+          </hudson.matrix.JDKAxis>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
@@ -79,6 +83,7 @@ on all supported target platforms (from juno to mars).</description>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command>if [ -f ./releng/org.eclipse.sirius.releng/checks.sh ]; then
   sh ./releng/org.eclipse.sirius.releng/checks.sh
 fi
@@ -117,12 +122,13 @@ fi
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command>if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
   STREAM=&quot;latest&quot;
 else
   STREAM=$(echo &quot;$GERRIT_BRANCH&quot; | sed -e &apos;s/v//&apos;)
 fi
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 </command>
           </hudson.tasks.Shell>
           <maven-builder>
@@ -156,13 +162,6 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
       </describable-list-property>
     </entry>
     <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Inherit From Job)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
-    </entry>
-    <entry>
       <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
       <trigger-property>
         <originalValue class="com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.GerritTrigger">
@@ -171,6 +170,12 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
             <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
               <compareType>ANT</compareType>
               <pattern>sirius/org.eclipse.sirius</pattern>
+              <branches>
+                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                  <compareType>ANT</compareType>
+                  <pattern>master</pattern>
+                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+              </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           </gerritProjects>
           <silentMode>false</silentMode>
@@ -275,13 +280,13 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PL
   <creationTime>1448449096513</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

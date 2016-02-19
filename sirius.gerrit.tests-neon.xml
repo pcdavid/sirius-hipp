@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <matrix-project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; and launchs associated tests&#xd;
-from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;&#xd;
+  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; and launchs associated tests
+from &lt;a href=&quot;https://git.eclipse.org/r/#/&quot;&gt; a gerrit changeset&lt;/a&gt;
 on last supported target platforms (neon).</description>
   <project-properties class="concurrent-hash-map">
     <entry>
@@ -52,6 +52,12 @@ on last supported target platforms (neon).</description>
               <string>gerrit-swtbot-sequence</string>
             </values>
           </hudson.matrix.TextAxis>
+          <hudson.matrix.JDKAxis>
+            <name>jdk</name>
+            <values>
+              <string>JDK-1.8.0</string>
+            </values>
+          </hudson.matrix.JDKAxis>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
@@ -147,13 +153,14 @@ on last supported target platforms (neon).</description>
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
 if [ &quot;$GERRIT_BRANCH&quot; = &quot;master&quot; ]; then
   STREAM=&quot;latest&quot;
 else
   STREAM=$(echo &quot;$GERRIT_BRANCH&quot; | sed -e &apos;s/v//&apos;)
 fi
-sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 
 # Remove screenshots from previous SWTbot tests so that only relevant ones are present after a build
 rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
@@ -197,13 +204,6 @@ export SWT_GTK3=0</command>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
-    </entry>
-    <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
@@ -337,13 +337,13 @@ export SWT_GTK3=0</command>
   <creationTime>1448449296524</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
