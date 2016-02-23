@@ -23,6 +23,16 @@
       </log-rotator-property>
     </entry>
     <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -53,16 +63,6 @@
       </axis-list-property>
     </entry>
     <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>hudson-tasks-Mailer</string>
       <external-property>
         <originalValue class="hudson.tasks.Mailer">
@@ -85,28 +85,6 @@
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
-    </entry>
-    <entry>
-      <string>parametersDefinitionProperties</string>
-      <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList">
-          <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-              <hudson.model.BooleanParameterDefinition>
-                <name>tests.skipLongTests</name>
-                <description></description>
-                <defaultValue>false</defaultValue>
-              </hudson.model.BooleanParameterDefinition>
-              <hudson.model.BooleanParameterDefinition>
-                <name>tests.skipUnreliableTests</name>
-                <description></description>
-                <defaultValue>false</defaultValue>
-              </hudson.model.BooleanParameterDefinition>
-            </parameterDefinitions>
-          </hudson.model.ParametersDefinitionProperty>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </copy-write-list-property>
     </entry>
     <entry>
       <string>builders</string>
@@ -150,48 +128,6 @@ integration-test
                 <string>full</string>
                 <string>headless</string>
                 <string>incubation</string>
-                <string>$SUITE</string>
-              </profiles>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
-          <hudson.tasks.Shell>
-            <disabled>false</disabled>
-            <description></description>
-            <command>if [ -e &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot; ]; then
-  # Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
-  sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!g&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
-fi
-
-</command>
-          </hudson.tasks.Shell>
-          <maven-builder>
-            <disabled>false</disabled>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean
-integration-test
--B
-</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="$PLATFORM"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <profiles>
                 <string>$SUITE</string>
               </profiles>
               <recursive>true</recursive>
@@ -307,15 +243,15 @@ integration-test
   <creationTime>1412320946364</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

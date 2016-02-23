@@ -303,13 +303,13 @@ integration-test
   <creationTime>1450685868549</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

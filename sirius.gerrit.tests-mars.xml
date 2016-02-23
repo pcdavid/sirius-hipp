@@ -25,6 +25,16 @@ on last supported target platforms (mars).</description>
       </log-rotator-property>
     </entry>
     <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -45,16 +55,6 @@ on last supported target platforms (mars).</description>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -136,7 +136,9 @@ export SWT_GTK3=0</command>
             <disabled>false</disabled>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean integration-test -B</goals>
+              <goals>clean
+integration-test
+-B</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
@@ -176,16 +178,20 @@ else
   if [ $(grep -o &quot;\.&quot; &lt;&lt;&lt; &quot;$GERRIT_BRANCH&quot; | wc -l) = &quot;3&quot; ]; then
     STREAM=$(echo &quot;$STREAM&quot; | sed -e &apos;s/-x//&apos;)
   fi
+
+  if [ -e &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot; ]; then
+     sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
+  fi
 fi
-if [ -e &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot; ]; then
-   sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/$STREAM/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
-fi</command>
+</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <disabled>false</disabled>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean integration-test -B</goals>
+              <goals>clean
+integration-test
+-B</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
@@ -358,13 +364,13 @@ fi</command>
   <creationTime>1426867369802</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

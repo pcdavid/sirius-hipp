@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt; using the bleeding-edge versions of all our dependencies. It is expected that this build will see punctual failures once in a while, but any repeated failures should be investigated to see if they correspond to real integration issues.&#xd;
+  <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt; using the bleeding-edge versions of all our dependencies. It is expected that this build will see punctual failures once in a while, but any repeated failures should be investigated to see if they correspond to real integration issues.
 </description>
   <project-properties class="concurrent-hash-map">
     <entry>
@@ -54,21 +54,12 @@
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
-          <hudson.tasks.Shell>
-            <disabled>false</disabled>
-            <command>LATEST=$(releng/org.eclipse.sirius.releng/latest-ibuild.sh)
-TARGET_FILE=&quot;releng/org.eclipse.sirius.targets/sirius_canary.target&quot;
-sed -i -e &quot;s|http://download.eclipse.org/eclipse/updates/4.6-I-builds|$LATEST|&quot; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.platform.ide&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.platform.ide&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.platform.sdk&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.platform.sdk&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+&quot;|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;0.0.0&quot;|&apos; &quot;$TARGET_FILE&quot;
-</command>
-          </hudson.tasks.Shell>
           <maven-builder>
             <disabled>false</disabled>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean verify</goals>
+              <goals>clean
+package</goals>
               <privateRepository>false</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>pom.xml</pomFile>
@@ -196,14 +187,14 @@ sed -i -r -e &apos;s|id=&quot;org.eclipse.sdk.ide&quot; version=&quot;[^&quot;]+
   <creationTime>1398332965848</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

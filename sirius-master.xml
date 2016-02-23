@@ -128,40 +128,7 @@ package</goals>
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
-            <description></description>
-            <command>if [ -e &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot; ]; then
-  sed -i -r -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/latest/$PLATFORM/?\&quot;!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository\&quot;!g&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
-fi</command>
-          </hudson.tasks.Shell>
-          <maven-builder>
-            <disabled>false</disabled>
-            <config>
-              <installationId>apache-maven-latest</installationId>
-              <goals>clean package</goals>
-              <privateRepository>true</privateRepository>
-              <privateTmpdir>false</privateTmpdir>
-              <pomFile>packaging/org.eclipse.sirius.tests.parent/pom.xml</pomFile>
-              <properties>
-                <entries>
-                  <entry name="platform-version-name" value="$PLATFORM"/>
-                </entries>
-              </properties>
-              <errors>false</errors>
-              <verbosity>NORMAL</verbosity>
-              <offline>false</offline>
-              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
-              <recursive>true</recursive>
-              <checksumMode>NORMAL</checksumMode>
-              <failMode>NORMAL</failMode>
-              <makeMode>NONE</makeMode>
-              <settingsId>NONE</settingsId>
-              <globalSettingsId>NONE</globalSettingsId>
-              <toolChainsId>NONE</toolChainsId>
-            </config>
-          </maven-builder>
-          <hudson.tasks.Shell>
-            <disabled>false</disabled>
-            <description></description>
+            <description>Publish as an integration (nightly) build</description>
             <command>sh ./releng/org.eclipse.sirius.releng/publish-nightly.sh
 </command>
           </hudson.tasks.Shell>
@@ -250,13 +217,13 @@ fi</command>
   <creationTime>1378933280368</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
