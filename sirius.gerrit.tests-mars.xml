@@ -130,6 +130,7 @@ rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot
 sleep 1
 /usr/bin/metacity-message disable-keybindings
 
+rm -f plugins/org.eclipse.sirius.tests*/org_eclipse_sirius_tests_*.txt
 export SWT_GTK3=0</command>
           </hudson.tasks.Shell>
           <maven-builder>
@@ -224,7 +225,7 @@ integration-test
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>plugins/*.test*/target/work/data/.metadata/*log</artifacts>
+          <artifacts>plugins/*.test*/target/work/data/.metadata/*log,plugins/org.eclipse.sirius.tests*/org_eclipse_sirius_tests_*.txt</artifacts>
           <compressionType>NONE</compressionType>
           <latestOnly>false</latestOnly>
           <autoValidateFileMask>false</autoValidateFileMask>
@@ -369,8 +370,8 @@ integration-test
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
