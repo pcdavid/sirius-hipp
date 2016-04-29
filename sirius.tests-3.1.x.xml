@@ -23,6 +23,16 @@
       </log-rotator-property>
     </entry>
     <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -45,16 +55,6 @@
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-Mailer</string>
@@ -111,7 +111,7 @@
       <string>hudson-triggers-SCMTrigger</string>
       <trigger-property>
         <originalValue class="hudson.triggers.SCMTrigger">
-          <spec>0 22 * * * *</spec>
+          <spec>0 14 * * * *</spec>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
@@ -151,6 +151,7 @@ package
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
 sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/3.1.x/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 
@@ -204,13 +205,6 @@ integration-test
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
-    </entry>
-    <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>

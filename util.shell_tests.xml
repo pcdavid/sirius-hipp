@@ -17,7 +17,7 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>find ~/.fonts -name &apos;*.ttf&apos; | sort | xargs md5sum</command>
+            <command>grep -i kill /var/log/messages*</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
