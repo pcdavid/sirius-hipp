@@ -17,7 +17,17 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>grep -i kill /var/log/messages*</command>
+            <command>/shared/common/jdk1.8.0_x64-latest/bin/jps | while read p; do
+    i=$(echo $p | awk &apos;{print $1}&apos;)
+  [ -f /proc/$i/cmdline ] &amp;&amp; {
+    cmd=$(cat /proc/$i/cmdline)
+    echo &quot;======= $cmd =======&quot;
+    /shared/common/jdk1.8.0_x64-latest/bin/jstack $i
+    echo
+    echo
+  }
+done
+</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
