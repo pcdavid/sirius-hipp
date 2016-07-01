@@ -25,16 +25,6 @@ on last supported target platforms (neon).</description>
       </log-rotator-property>
     </entry>
     <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -61,6 +51,16 @@ on last supported target platforms (neon).</description>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -181,7 +181,7 @@ integration-test
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>plugins/*.test*/target/work/data/.metadata/*log</artifacts>
+          <artifacts>plugins/*.test*/target/screenshots/*.jpeg, plugins/*.test*/target/work/data/.metadata/*log, plugins/org.eclipse.sirius.tests*/org_eclipse_sirius_tests_*.txt</artifacts>
           <compressionType>NONE</compressionType>
           <latestOnly>false</latestOnly>
           <autoValidateFileMask>false</autoValidateFileMask>
@@ -203,6 +203,10 @@ integration-test
                 <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
                   <compareType>ANT</compareType>
                   <pattern>v4.0.x</pattern>
+                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                  <compareType>ANT</compareType>
+                  <pattern>master</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
@@ -310,11 +314,11 @@ integration-test
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>

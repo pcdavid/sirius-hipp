@@ -87,7 +87,7 @@ on all supported target platforms.</description>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
             <disabled>false</disabled>
-            <description></description>
+            <description>Sanity checks</description>
             <command>if [ -f ./releng/org.eclipse.sirius.releng/checks.sh ]; then
   sh ./releng/org.eclipse.sirius.releng/checks.sh
 fi
@@ -114,7 +114,6 @@ package</goals>
               <profiles>
                 <string>headless</string>
                 <string>full</string>
-                <string>incubation</string>
                 <string>sign</string>
               </profiles>
               <recursive>true</recursive>
@@ -218,11 +217,11 @@ package</goals>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
