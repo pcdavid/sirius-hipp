@@ -247,13 +247,13 @@ fi
   <creationTime>1448449096513</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

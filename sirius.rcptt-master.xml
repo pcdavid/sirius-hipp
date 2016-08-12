@@ -14,7 +14,7 @@
       <string>logRotator</string>
       <log-rotator-property>
         <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>60</daysToKeep>
+          <daysToKeep>20</daysToKeep>
           <numToKeep>-1</numToKeep>
           <artifactDaysToKeep>-1</artifactDaysToKeep>
           <artifactNumToKeep>-1</artifactNumToKeep>
@@ -30,13 +30,6 @@
             <name>PLATFORM</name>
             <values>
               <string>neon</string>
-            </values>
-          </hudson.matrix.TextAxis>
-          <hudson.matrix.TextAxis>
-            <name>SUITE</name>
-            <values>
-              <string>swtbot-part1</string>
-              <string>swtbot-part2</string>
             </values>
           </hudson.matrix.TextAxis>
           <hudson.matrix.JDKAxis>
@@ -75,7 +68,7 @@
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.junit.JUnitResultArchiver">
-          <testResults>plugins/*.test*/target/surefire-reports/*.xml</testResults>
+          <testResults>plugins/org.eclipse.sirius.tests.rcptt/target/surefire-reports/*.xml</testResults>
           <keepLongStdio>false</keepLongStdio>
           <testDataPublishers/>
         </originalValue>
@@ -106,7 +99,7 @@ export SWT_GTK3=0
             <config>
               <installationId>apache-maven-latest</installationId>
               <goals>clean
-integration-test
+package
 -B
 </goals>
               <privateRepository>true</privateRepository>
@@ -124,9 +117,32 @@ integration-test
               <profiles>
                 <string>full</string>
                 <string>headless</string>
-                <string>incubation</string>
-                <string>$SUITE</string>
+                <string>rcptt</string>
               </profiles>
+              <recursive>true</recursive>
+              <checksumMode>NORMAL</checksumMode>
+              <failMode>NORMAL</failMode>
+              <makeMode>NONE</makeMode>
+              <settingsId>NONE</settingsId>
+              <globalSettingsId>NONE</globalSettingsId>
+              <toolChainsId>NONE</toolChainsId>
+            </config>
+          </maven-builder>
+          <maven-builder>
+            <disabled>false</disabled>
+            <config>
+              <installationId>apache-maven-latest</installationId>
+              <goals>test</goals>
+              <privateRepository>false</privateRepository>
+              <privateTmpdir>false</privateTmpdir>
+              <pomFile>plugins/org.eclipse.sirius.tests.rcptt/pom.xml</pomFile>
+              <properties>
+                <entries/>
+              </properties>
+              <errors>false</errors>
+              <verbosity>NORMAL</verbosity>
+              <offline>false</offline>
+              <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
@@ -144,7 +160,7 @@ integration-test
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>plugins/*.test*/target/screenshots/*.jpeg, plugins/*.test*/target/surefire.properties,plugins/org.eclipse.sirius.tests*/org_eclipse_sirius_tests_*.txt</artifacts>
+          <artifacts>, plugins/org.eclipse.sirius.tests.rcptt/target/results/*, , plugins/org.eclipse.sirius.tests.rcptt/target/results/images/*</artifacts>
           <compressionType>GZIP</compressionType>
           <latestOnly>false</latestOnly>
           <autoValidateFileMask>false</autoValidateFileMask>
@@ -225,27 +241,20 @@ integration-test
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
     </entry>
-    <entry>
-      <string>hudson-triggers-TimerTrigger</string>
-      <trigger-property>
-        <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>0 18 * * *</spec>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1465735525680</creationTime>
+  <creationTime>1467645887131</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:anonymous</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
