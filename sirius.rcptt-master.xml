@@ -160,7 +160,7 @@ package
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>, plugins/org.eclipse.sirius.tests.rcptt/target/results/*, , plugins/org.eclipse.sirius.tests.rcptt/target/results/images/*</artifacts>
+          <artifacts>plugins/org.eclipse.sirius.tests.rcptt/target/results/*, plugins/org.eclipse.sirius.tests.rcptt/target/results/images/*</artifacts>
           <compressionType>GZIP</compressionType>
           <latestOnly>false</latestOnly>
           <autoValidateFileMask>false</autoValidateFileMask>
@@ -247,15 +247,15 @@ package
   <creationTime>1467645887131</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:anonymous</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

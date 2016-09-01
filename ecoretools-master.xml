@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Results of this build are published at the locations :&#xd;
-&lt;ul&gt;&#xd;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/STREAM/PLATFORM&lt;/li&gt;&#xd;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/VERSION/PLATFORM/all-in-one&lt;/li&gt;&#xd;
-&lt;/ul&gt;&#xd;
-Example :&#xd;
-&lt;ul&gt;&#xd;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.1.x/mars&lt;/li&gt;&#xd;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.1.0/mars/all-in-one&lt;/li&gt;&#xd;
+  <description>Results of this build are published at the locations :
+&lt;ul&gt;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/STREAM/PLATFORM&lt;/li&gt;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/VERSION/PLATFORM/all-in-one&lt;/li&gt;
+&lt;/ul&gt;
+Example :
+&lt;ul&gt;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.2.x/neon&lt;/li&gt;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.2.0/neon/all-in-one&lt;/li&gt;
 &lt;/ul&gt;</description>
   <project-properties class="concurrent-hash-map">
     <entry>
@@ -123,6 +123,7 @@ Example :&#xd;
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command>sh &quot;$WORKSPACE/org.eclipse.emf.ecoretools.build/publish-nightly.sh&quot;</command>
           </hudson.tasks.Shell>
         </originalValue>
@@ -219,15 +220,15 @@ Example :&#xd;
   <creationTime>1387188220758</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:anonymous</permission>
       <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

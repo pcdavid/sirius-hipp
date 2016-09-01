@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Promote the latest nightly build from a given stream as a Stable, Milestone or Release.</description>
   <project-properties class="concurrent-hash-map">
     <entry>
       <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
@@ -11,15 +11,57 @@
       </base-property>
     </entry>
     <entry>
+      <string>parametersDefinitionProperties</string>
+      <copy-write-list-property>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.ChoiceParameterDefinition>
+                <name>STREAM</name>
+                <description></description>
+                <choices class="java.util.Arrays$ArrayList">
+                  <a class="string-array">
+                    <string>4.1.x</string>
+                    <string>4.0.x</string>
+                    <string>3.1.x</string>
+                    <string>3.0.x</string>
+                    <string>2.0.x</string>
+                    <string>1.0.x</string>
+                    <string>0.9.x</string>
+                  </a>
+                </choices>
+              </hudson.model.ChoiceParameterDefinition>
+              <hudson.model.ChoiceParameterDefinition>
+                <name>TYPE</name>
+                <description></description>
+                <choices class="java.util.Arrays$ArrayList">
+                  <a class="string-array">
+                    <string>stable</string>
+                    <string>milestone</string>
+                    <string>release</string>
+                  </a>
+                </choices>
+              </hudson.model.ChoiceParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>NAME</name>
+                <description></description>
+                <defaultValue></defaultValue>
+              </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </copy-write-list-property>
+    </entry>
+    <entry>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>ping git.eclipse.org
-
-git clone -v http://git.eclipse.org/gitroot/sirius/org.eclipse.sirius.git</command>
+            <command>SOURCE_BUILD=$(find /home/data/httpd/download.eclipse.org/sirius/updates/nightly/ -type d -maxdepth 1 -name &quot;${STREAM%.x}*-N*&quot; | sort | tail -n 1)
+echo $SOURCE_BUILD</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
@@ -42,7 +84,7 @@ git clone -v http://git.eclipse.org/gitroot/sirius/org.eclipse.sirius.git</comma
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1412766876860</creationTime>
+  <creationTime>1472462893811</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
@@ -63,6 +105,10 @@ git clone -v http://git.eclipse.org/gitroot/sirius/org.eclipse.sirius.git</comma
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
+  <builders/>
+  <publishers/>
+  <buildWrappers/>
 </project>

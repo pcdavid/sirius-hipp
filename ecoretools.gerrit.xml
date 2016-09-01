@@ -55,6 +55,7 @@
                 <description></description>
                 <choices class="java.util.Arrays$ArrayList">
                   <a class="string-array">
+                    <string>neon</string>
                     <string>mars</string>
                     <string>luna</string>
                     <string>kepler</string>
@@ -109,9 +110,16 @@
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.8.0 Latest</originalValue>
+        <originalValue class="string">JDK-1.8.0</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
+    </entry>
+    <entry>
+      <string>concurrentBuild</string>
+      <boolean-property>
+        <originalValue class="boolean">true</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
@@ -125,13 +133,6 @@
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
-    </entry>
-    <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">true</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
     </entry>
     <entry>
       <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
@@ -244,13 +245,13 @@
   <creationTime>1423759570682</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

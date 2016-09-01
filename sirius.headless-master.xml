@@ -169,13 +169,13 @@
   <creationTime>1440144150160</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Delete:maxime.porhel@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:maxime.porhel@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:maxime.porhel@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:maxime.porhel@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:maxime.porhel@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:maxime.porhel@obeo.fr</permission>
       <permission>hudson.model.Run.Update:maxime.porhel@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:maxime.porhel@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:maxime.porhel@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:maxime.porhel@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:maxime.porhel@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:maxime.porhel@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:maxime.porhel@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
