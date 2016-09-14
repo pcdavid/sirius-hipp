@@ -25,16 +25,6 @@ on last supported target platforms (neon).</description>
       </log-rotator-property>
     </entry>
     <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -61,6 +51,16 @@ on last supported target platforms (neon).</description>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -132,9 +132,11 @@ on last supported target platforms (neon).</description>
 rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
 
 # Make sure we have a properly configured window manager for SWTbot tests
-/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
+#/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
+/usr/bin/mutter --display=$DISPLAY --replace --sm-disable &amp;
 sleep 1
-/usr/bin/metacity-message disable-keybindings
+#/usr/bin/metacity-message disable-keybindings
+/usr/bin/mutter-message disable-keybindings
 
 rm -f plugins/org.eclipse.sirius.tests*/org_eclipse_sirius_tests_*.txt
 export SWT_GTK3=0</command>
@@ -314,12 +316,12 @@ integration-test
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
