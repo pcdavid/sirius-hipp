@@ -94,9 +94,9 @@
 rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
 
 # Make sure we have a properly configured window manager for SWTbot tests
-/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
-sleep 1
-/usr/bin/metacity-message disable-keybindings
+/usr/bin/mutter --display=$DISPLAY --replace --sm-disable &amp;
+#sleep 1
+#/usr/bin/metacity-message disable-keybindings
 
 export SWT_GTK3=0
 </command>
@@ -240,8 +240,8 @@ integration-test
   <creationTime>1465735525680</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
