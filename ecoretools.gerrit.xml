@@ -11,6 +11,18 @@
       </base-property>
     </entry>
     <entry>
+      <string>logRotator</string>
+      <log-rotator-property>
+        <originalValue class="hudson.tasks.LogRotator">
+          <daysToKeep>60</daysToKeep>
+          <numToKeep>60</numToKeep>
+          <artifactDaysToKeep>-1</artifactDaysToKeep>
+          <artifactNumToKeep>-1</artifactNumToKeep>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </log-rotator-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
         <originalValue class="hudson.plugins.xvnc.Xvnc">
@@ -115,13 +127,6 @@
       </string-property>
     </entry>
     <entry>
-      <string>concurrentBuild</string>
-      <boolean-property>
-        <originalValue class="boolean">true</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </boolean-property>
-    </entry>
-    <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
@@ -133,6 +138,13 @@
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
+    </entry>
+    <entry>
+      <string>concurrentBuild</string>
+      <boolean-property>
+        <originalValue class="boolean">true</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </boolean-property>
     </entry>
     <entry>
       <string>com-sonyericsson-hudson-plugins-gerrit-trigger-hudsontrigger-GerritTrigger</string>
@@ -245,13 +257,13 @@
   <creationTime>1423759570682</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

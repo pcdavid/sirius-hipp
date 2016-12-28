@@ -33,6 +33,7 @@ on all supported target platforms.</description>
             <values>
               <string>mars</string>
               <string>neon</string>
+              <string>oxygen</string>
             </values>
           </hudson.matrix.TextAxis>
           <hudson.matrix.JDKAxis>
@@ -129,6 +130,7 @@ package</goals>
             <disabled>false</disabled>
             <description>Publish as an integration (nightly) build</description>
             <command>sh ./releng/org.eclipse.sirius.releng/publish-nightly.sh
+
 </command>
           </hudson.tasks.Shell>
         </originalValue>
@@ -216,13 +218,13 @@ package</goals>
   <creationTime>1378933280368</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

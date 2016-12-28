@@ -39,9 +39,7 @@
           <hudson.matrix.TextAxis>
             <name>PLATFORM</name>
             <values>
-              <string>mars</string>
               <string>neon</string>
-              <string>canary</string>
             </values>
           </hudson.matrix.TextAxis>
           <hudson.matrix.TextAxis>
@@ -98,9 +96,8 @@
 rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
 
 # Make sure we have a properly configured window manager for SWTbot tests
-/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
-sleep 1
-/usr/bin/metacity-message disable-keybindings
+sleep 5
+ICEWM_PRIVCFG=&quot;$WORKSPACE/.icewm/&quot; /usr/bin/icewm --no-configure &amp;
 
 export SWT_GTK3=0
 </command>
@@ -243,15 +240,15 @@ integration-test
   <creationTime>1412320946364</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:anonymous</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
+      <permission>hudson.model.Item.Read:anonymous</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

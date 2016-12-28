@@ -23,6 +23,16 @@
       </log-rotator-property>
     </entry>
     <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -45,16 +55,6 @@
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
-    </entry>
-    <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-Mailer</string>
@@ -140,10 +140,12 @@ package
               <verbosity>NORMAL</verbosity>
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
+              <profiles/>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
               <makeMode>NONE</makeMode>
+              <projects/>
               <settingsId>NONE</settingsId>
               <globalSettingsId>NONE</globalSettingsId>
               <toolChainsId>NONE</toolChainsId>
@@ -151,6 +153,7 @@ package
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command># Adjust target platform definition to consume the Sirius we just built locally instead of the latest published nightly
 sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/3.1.3.100/$PLATFORM!file://$WORKSPACE/packaging/org.eclipse.sirius.update/target/repository!&quot; &quot;releng/org.eclipse.sirius.targets/sirius_tests_$PLATFORM.target&quot;
 
@@ -158,9 +161,8 @@ sed -i -e &quot;s!http://download.eclipse.org/sirius/updates/nightly/3.1.3.100/$
 rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
 
 # Make sure we have a properly configured window manager for SWTbot tests
-/usr/bin/metacity --display=$DISPLAY --replace --sm-disable &amp;
+/usr/bin/icewm &amp;
 sleep 1
-/usr/bin/metacity-message disable-keybindings
 
 export SWT_GTK3=0
 
@@ -196,6 +198,7 @@ integration-test
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
               <makeMode>NONE</makeMode>
+              <projects/>
               <settingsId>NONE</settingsId>
               <globalSettingsId>NONE</globalSettingsId>
               <toolChainsId>NONE</toolChainsId>
@@ -204,13 +207,6 @@ integration-test
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
-    </entry>
-    <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
     </entry>
     <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
@@ -303,13 +299,13 @@ integration-test
   <creationTime>1450685868549</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
@@ -318,7 +314,7 @@ integration-test
   </cascading-job-properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <concurrentBuild>false</concurrentBuild>

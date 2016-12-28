@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Promote the latest nightly build from a given stream as a Stable, Milestone or Release.</description>
+  <description>Removes obsolete nightly builds. For each development stream, keep between 1 and 5 nightlies, but remove the others.
+
+For now the job only lists which builds it thinks should be removed, but does not actually make any change. See &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=429564&quot;&gt;#429564&lt;/a&gt; for details.</description>
   <project-properties class="concurrent-hash-map">
     <entry>
       <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
@@ -11,42 +13,28 @@
       </base-property>
     </entry>
     <entry>
+      <string>logRotator</string>
+      <log-rotator-property>
+        <originalValue class="hudson.tasks.LogRotator">
+          <daysToKeep>20</daysToKeep>
+          <numToKeep>-1</numToKeep>
+          <artifactDaysToKeep>-1</artifactDaysToKeep>
+          <artifactNumToKeep>-1</artifactNumToKeep>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </log-rotator-property>
+    </entry>
+    <entry>
       <string>parametersDefinitionProperties</string>
       <copy-write-list-property>
         <originalValue class="hudson.util.CopyOnWriteList">
           <hudson.model.ParametersDefinitionProperty>
             <parameterDefinitions>
-              <hudson.model.ChoiceParameterDefinition>
-                <name>STREAM</name>
-                <description></description>
-                <choices class="java.util.Arrays$ArrayList">
-                  <a class="string-array">
-                    <string>4.1.x</string>
-                    <string>4.0.x</string>
-                    <string>3.1.x</string>
-                    <string>3.0.x</string>
-                    <string>2.0.x</string>
-                    <string>1.0.x</string>
-                    <string>0.9.x</string>
-                  </a>
-                </choices>
-              </hudson.model.ChoiceParameterDefinition>
-              <hudson.model.ChoiceParameterDefinition>
-                <name>TYPE</name>
-                <description></description>
-                <choices class="java.util.Arrays$ArrayList">
-                  <a class="string-array">
-                    <string>stable</string>
-                    <string>milestone</string>
-                    <string>release</string>
-                  </a>
-                </choices>
-              </hudson.model.ChoiceParameterDefinition>
-              <hudson.model.StringParameterDefinition>
-                <name>NAME</name>
-                <description></description>
-                <defaultValue></defaultValue>
-              </hudson.model.StringParameterDefinition>
+              <hudson.model.BooleanParameterDefinition>
+                <name>DRY_RUN</name>
+                <description>If true (the default), only lists which directories would be removed, but do not actually remove them.</description>
+                <defaultValue>true</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
         </originalValue>
@@ -60,8 +48,24 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>SOURCE_BUILD=$(find /home/data/httpd/download.eclipse.org/sirius/updates/nightly/ -type d -maxdepth 1 -name &quot;${STREAM%.x}*-N*&quot; | sort | tail -n 1)
-echo $SOURCE_BUILD</command>
+            <command>ROOT_DIR=&apos;/home/data/httpd/download.eclipse.org/sirius/updates/nightly&apos;
+
+rm -f all.txt kept.txt removed.txt
+
+# Find all nightly builds
+find &quot;$ROOT_DIR&quot; -type d -maxdepth 1 | sort | grep -E &apos;/[0-9]\.[0-9]\.[0-9]-N&apos; &gt; all.txt
+# For each X.Y stream, keep the 5 most recent X.Y.Z build (whichever Z)
+for s in $(find &quot;$ROOT_DIR&quot; -type d -maxdepth 1 | sort | grep -E &apos;/[0-9]\.[0-9]\.[0-9]-N&apos; | sed -r -e &apos;s|.*/([0-9]\.[0-9])\.[0-9]-N.*|\1|&apos; | sort -u); do
+    find &quot;$ROOT_DIR&quot; -type d -maxdepth 1 -name &quot;${s}.[0-9]-N*&quot; | sort | tail -n 5
+done &gt; kept.txt
+# Identify which ones can be removed
+comm -23 all.txt kept.txt &gt; removed.txt
+
+if [ &quot;$DRY_RUN&quot; = &quot;false&quot; ]; then
+  for d in $(cat removed.txt); do
+    echo &quot;rm -rf ${d}&quot;
+  done
+fi</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
@@ -75,20 +79,42 @@ echo $SOURCE_BUILD</command>
       </string-property>
     </entry>
     <entry>
+      <string>hudson-tasks-ArtifactArchiver</string>
+      <external-property>
+        <originalValue class="hudson.tasks.ArtifactArchiver">
+          <artifacts>all.txt, kept.txt, removed.txt</artifacts>
+          <compressionType>GZIP</compressionType>
+          <latestOnly>false</latestOnly>
+          <autoValidateFileMask>false</autoValidateFileMask>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
       <string>scm</string>
       <scm-property>
         <originalValue class="hudson.scm.NullSCM"/>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
     </entry>
+    <entry>
+      <string>hudson-triggers-TimerTrigger</string>
+      <trigger-property>
+        <originalValue class="hudson.triggers.TimerTrigger">
+          <spec>@daily</spec>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </trigger-property>
+    </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1472462893811</creationTime>
+  <creationTime>1480257709806</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
