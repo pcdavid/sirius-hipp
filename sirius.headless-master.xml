@@ -83,7 +83,7 @@
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.7.0 Latest</originalValue>
+        <originalValue class="string">JDK-1.8.0</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -169,8 +169,8 @@
   <creationTime>1440144150160</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:maxime.porhel@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:maxime.porhel@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:maxime.porhel@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:maxime.porhel@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:maxime.porhel@obeo.fr</permission>
       <permission>hudson.model.Item.Read:maxime.porhel@obeo.fr</permission>

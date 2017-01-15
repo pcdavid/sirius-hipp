@@ -17,7 +17,7 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>which Xvfb</command>
+            <command>du -csh ~/.hudson/jobs/*/* | sed -e &apos;s|/home/hudson/genie.sirius/.hudson/jobs/||g&apos; | LANG=C sort -h</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
@@ -43,8 +43,8 @@
   <creationTime>1412766876860</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>

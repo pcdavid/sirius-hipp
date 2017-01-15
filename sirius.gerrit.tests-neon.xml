@@ -207,6 +207,10 @@ integration-test
                   <compareType>ANT</compareType>
                   <pattern>master</pattern>
                 </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                <com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
+                  <compareType>ANT</compareType>
+                  <pattern>v4.1.x</pattern>
+                </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.Branch>
               </branches>
             </com.sonyericsson.hudson.plugins.gerrit.trigger.hudsontrigger.data.GerritProject>
           </gerritProjects>
@@ -312,8 +316,8 @@ integration-test
   <creationTime>1448449296524</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>

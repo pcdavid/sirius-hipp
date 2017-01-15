@@ -63,7 +63,7 @@ comm -23 all.txt kept.txt &gt; removed.txt
 
 if [ &quot;$DRY_RUN&quot; = &quot;false&quot; ]; then
   for d in $(cat removed.txt); do
-    echo &quot;rm -rf ${d}&quot;
+    rm -rf &quot;${d}&quot;
   done
 fi</command>
           </hudson.tasks.Shell>
