@@ -86,6 +86,28 @@
       </external-property>
     </entry>
     <entry>
+      <string>parametersDefinitionProperties</string>
+      <copy-write-list-property>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.BooleanParameterDefinition>
+                <name>CLEAR_PRIVATE_REPO</name>
+                <description>If true, the build-local Maven repositories will be removed after the build.</description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+              <hudson.model.BooleanParameterDefinition>
+                <name>DELETE_BUILD_RESULT</name>
+                <description>If true, delete the build result after the tests have finished.</description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </copy-write-list-property>
+    </entry>
+    <entry>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
@@ -100,6 +122,7 @@ sleep 5
 ICEWM_PRIVCFG=&quot;$WORKSPACE/.icewm/&quot; /usr/bin/icewm --no-configure &amp;
 
 export SWT_GTK3=0
+
 </command>
           </hudson.tasks.Shell>
           <maven-builder>
@@ -131,11 +154,23 @@ integration-test
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
               <makeMode>NONE</makeMode>
+              <mavenOpts>-Xms256m -Xmx1024m</mavenOpts>
               <settingsId>NONE</settingsId>
               <globalSettingsId>NONE</globalSettingsId>
               <toolChainsId>NONE</toolChainsId>
             </config>
           </maven-builder>
+          <hudson.tasks.Shell>
+            <disabled>false</disabled>
+            <description>Optional cleanups</description>
+            <command>if [ &quot;$CLEAR_PRIVATE_REPO&quot; = &quot;true&quot; ]; then
+  rm -rf &quot;$WORKSPACE/.maven&quot;
+fi
+#if [ &quot;$DELETE_BUILD_RESULT&quot; = &quot;true&quot; ]; then
+#  /shared/common/apache-maven-latest/bin/mvn -Pfull,headless,&quot;$SUITE&quot; clean
+#fi
+</command>
+          </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </describable-list-property>
@@ -241,14 +276,14 @@ integration-test
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Read:anonymous</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.ExtendedRead:anonymous</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
