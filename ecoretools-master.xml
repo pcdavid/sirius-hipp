@@ -8,8 +8,8 @@
 &lt;/ul&gt;
 Example :
 &lt;ul&gt;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.2.x/neon&lt;/li&gt;
-&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.2.0/neon/all-in-one&lt;/li&gt;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.3.x/oxygen&lt;/li&gt;
+&lt;li&gt;http://download.eclipse.org/ecoretools/updates/nightly/3.3.0/oxygen/all-in-one&lt;/li&gt;
 &lt;/ul&gt;</description>
   <project-properties class="concurrent-hash-map">
     <entry>
@@ -69,6 +69,7 @@ Example :
                 <description></description>
                 <choices class="java.util.Arrays$ArrayList">
                   <a class="string-array">
+                    <string>oxygen</string>
                     <string>neon</string>
                     <string>mars</string>
                     <string>luna</string>
@@ -220,15 +221,15 @@ Example :
   <creationTime>1387188220758</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:anonymous</permission>
-      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:anonymous</permission>
       <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:anonymous</permission>
+      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

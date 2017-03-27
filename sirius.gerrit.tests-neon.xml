@@ -25,16 +25,6 @@ on last supported target platforms (neon).</description>
       </log-rotator-property>
     </entry>
     <entry>
-      <string>hudson-plugins-xvnc-Xvnc</string>
-      <external-property>
-        <originalValue class="hudson.plugins.xvnc.Xvnc">
-          <takeScreenshot>false</takeScreenshot>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
-    </entry>
-    <entry>
       <string>axes</string>
       <axis-list-property>
         <originalValue class="hudson.matrix.AxisList">
@@ -61,6 +51,16 @@ on last supported target platforms (neon).</description>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </axis-list-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-xvnc-Xvnc</string>
+      <external-property>
+        <originalValue class="hudson.plugins.xvnc.Xvnc">
+          <takeScreenshot>false</takeScreenshot>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -144,7 +144,8 @@ export SWT_GTK3=0</command>
               <installationId>apache-maven-latest</installationId>
               <goals>clean
 integration-test
--B</goals>
+-B
+--fail-at-end</goals>
               <privateRepository>true</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
@@ -316,13 +317,13 @@ integration-test
   <creationTime>1448449296524</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:florian.barbin@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:florian.barbin@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
