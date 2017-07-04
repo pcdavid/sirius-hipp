@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Removes obsolete nightly builds. For each development stream, keep between 1 and 5 nightlies, but remove the others.
+</description>
   <project-properties class="concurrent-hash-map">
     <entry>
       <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
@@ -14,8 +15,8 @@
       <string>logRotator</string>
       <log-rotator-property>
         <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>-1</daysToKeep>
-          <numToKeep>5</numToKeep>
+          <daysToKeep>10</daysToKeep>
+          <numToKeep>-1</numToKeep>
           <artifactDaysToKeep>-1</artifactDaysToKeep>
           <artifactNumToKeep>-1</artifactNumToKeep>
         </originalValue>
@@ -23,13 +24,21 @@
       </log-rotator-property>
     </entry>
     <entry>
-      <string>hudson-triggers-SCMTrigger</string>
-      <trigger-property>
-        <originalValue class="hudson.triggers.SCMTrigger">
-          <spec>@daily</spec>
+      <string>parametersDefinitionProperties</string>
+      <copy-write-list-property>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.BooleanParameterDefinition>
+                <name>DRY_RUN</name>
+                <description>If true, only lists which directories would be removed, but do not actually remove them.</description>
+                <defaultValue>false</defaultValue>
+              </hudson.model.BooleanParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
+      </copy-write-list-property>
     </entry>
     <entry>
       <string>builders</string>
@@ -38,11 +47,28 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>wget  -np -o links.txt -r -l 6 -e robots=off --spider http://www.eclipse.org/sirius/
-if grep -q &apos; 404 &apos; links.txt; then
-  grep -B 2 &apos; 404 &apos; links.txt &gt; errors.txt
-  exit 1
-fi</command>
+            <command>ROOT_DIR=&apos;/home/data/httpd/download.eclipse.org/ecoretools/updates/nightly&apos;
+
+du -sh &quot;$ROOT_DIR&quot;
+
+rm -f all.txt kept.txt removed.txt
+
+# Find all nightly builds
+find &quot;$ROOT_DIR&quot; -type d -maxdepth 1 | sort | grep -E &apos;/[0-9]\.[0-9]\.[0-9]-N&apos; &gt; all.txt
+# For each X.Y stream, keep the 5 most recent X.Y.Z build (whichever Z)
+for s in $(find &quot;$ROOT_DIR&quot; -type d -maxdepth 1 | sort | grep -E &apos;/[0-9]\.[0-9]\.[0-9]-N&apos; | sed -r -e &apos;s|.*/([0-9]\.[0-9])\.[0-9]-N.*|\1|&apos; | sort -u); do
+    find &quot;$ROOT_DIR&quot; -type d -maxdepth 1 -name &quot;${s}.[0-9]-N*&quot; | sort | tail -n 5
+done &gt; kept.txt
+# Identify which ones can be removed
+comm -23 all.txt kept.txt &gt; removed.txt
+
+if [ &quot;$DRY_RUN&quot; = &quot;false&quot; ]; then
+  for d in $(cat removed.txt); do
+    rm -rf &quot;${d}&quot;
+  done
+fi
+
+du -sh &quot;$ROOT_DIR&quot;</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
@@ -59,7 +85,7 @@ fi</command>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>links.txt,errors.txt</artifacts>
+          <artifacts>all.txt, kept.txt, removed.txt</artifacts>
           <compressionType>GZIP</compressionType>
           <latestOnly>false</latestOnly>
           <autoValidateFileMask>false</autoValidateFileMask>
@@ -71,71 +97,23 @@ fi</command>
     <entry>
       <string>scm</string>
       <scm-property>
-        <originalValue class="hudson.plugins.git.GitSCM">
-          <configVersion>1</configVersion>
-          <remoteRepositories>
-            <RemoteConfig>
-              <name>origin</name>
-              <uris>
-                <org.eclipse.jgit.transport.URIish>
-                  <scheme>git</scheme>
-                  <path>/gitroot/www.eclipse.org/sirius.git</path>
-                  <rawPath>/gitroot/www.eclipse.org/sirius.git</rawPath>
-                  <port>-1</port>
-                  <host>git.eclipse.org</host>
-                </org.eclipse.jgit.transport.URIish>
-              </uris>
-              <pushURIs/>
-              <fetch>
-                <org.eclipse.jgit.transport.RefSpec>
-                  <force>true</force>
-                  <wildcard>true</wildcard>
-                  <srcName>refs/heads/*</srcName>
-                  <dstName>refs/remotes/origin/*</dstName>
-                </org.eclipse.jgit.transport.RefSpec>
-              </fetch>
-              <push/>
-              <uploadpack>git-upload-pack</uploadpack>
-              <receivepack>git-receive-pack</receivepack>
-              <tagopt>AUTO_FOLLOW</tagopt>
-              <mirror>false</mirror>
-              <timeout>0</timeout>
-              <relativeTargetDir></relativeTargetDir>
-            </RemoteConfig>
-          </remoteRepositories>
-          <branches>
-            <hudson.plugins.git.BranchSpec>
-              <name>master</name>
-            </hudson.plugins.git.BranchSpec>
-          </branches>
-          <mergeOptions/>
-          <recursiveSubmodules>false</recursiveSubmodules>
-          <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-          <authorOrCommitter>false</authorOrCommitter>
-          <clean>false</clean>
-          <wipeOutWorkspace>false</wipeOutWorkspace>
-          <pruneBranches>false</pruneBranches>
-          <remotePoll>false</remotePoll>
-          <ignoreNotifyCommit>false</ignoreNotifyCommit>
-          <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
-          <gitTool>Default</gitTool>
-          <submoduleCfg class="list"/>
-          <includedRegions></includedRegions>
-          <excludedRegions></excludedRegions>
-          <excludedUsers></excludedUsers>
-          <excludedCommits/>
-          <gitConfigName></gitConfigName>
-          <gitConfigEmail></gitConfigEmail>
-          <skipTag>false</skipTag>
-          <useCgitClone>false</useCgitClone>
-        </originalValue>
+        <originalValue class="hudson.scm.NullSCM"/>
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
+    </entry>
+    <entry>
+      <string>hudson-triggers-TimerTrigger</string>
+      <trigger-property>
+        <originalValue class="hudson.triggers.TimerTrigger">
+          <spec>@daily</spec>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </trigger-property>
     </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
   <createdBy>cedric.brun@obeo.fr</createdBy>
-  <creationTime>1434036202627</creationTime>
+  <creationTime>1496157169559</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>

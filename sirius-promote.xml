@@ -21,6 +21,7 @@
                 <description></description>
                 <choices class="java.util.Arrays$ArrayList">
                   <a class="string-array">
+                    <string>5.0.x</string>
                     <string>4.1.x</string>
                     <string>4.0.x</string>
                     <string>3.1.x</string>
@@ -60,8 +61,27 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>SOURCE_BUILD=$(find /home/data/httpd/download.eclipse.org/sirius/updates/nightly/ -type d -maxdepth 1 -name &quot;${STREAM%.x}*-N*&quot; | sort | tail -n 1)
-echo $SOURCE_BUILD</command>
+            <command>ROOT_FOLDER=&apos;/home/data/httpd/download.eclipse.org/sirius/updates&apos;
+SOURCE_FOLDER=$(find /home/data/httpd/download.eclipse.org/sirius/updates/nightly/ -type d -maxdepth 1 -name &quot;${STREAM%.x}*-N*&quot; | sort | tail -n 1)
+SOURCE_BUILD_ID=$(basename &quot;$SOURCE_FOLDER&quot;)
+VERSION=&quot;${SOURCE_BUILD_ID%-N*}&quot;
+
+case &quot;$TYPE&quot; in
+    &quot;release&quot;)
+        DESTINATION=&quot;${ROOT_FOLDER}/releases/$VERSION&quot;
+        echo &quot;cp -a $SOURCE_FOLDER $DESTINATION&quot;
+    ;;
+    &quot;milestone&quot;)
+        DESTINATION=&quot;${ROOT_FOLDER}/milestones/$VERSION$NAME&quot;
+        cp -a $SOURCE_FOLDER $DESTINATION
+    ;;
+    &quot;stable&quot;)
+        TARGET_BUILD_ID=$(echo &quot;$SOURCE_BUILD_ID&quot; | sed -e &apos;s/-N/-S/&apos;)
+        DESTINATION=&quot;${ROOT_FOLDER}/stable/$TARGET_BUILD_ID&quot;
+        cp -a $SOURCE_FOLDER $DESTINATION
+    ;;
+esac
+</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
@@ -88,12 +108,12 @@ echo $SOURCE_BUILD</command>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

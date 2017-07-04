@@ -11,6 +11,18 @@
       </base-property>
     </entry>
     <entry>
+      <string>logRotator</string>
+      <log-rotator-property>
+        <originalValue class="hudson.tasks.LogRotator">
+          <daysToKeep>-1</daysToKeep>
+          <numToKeep>2</numToKeep>
+          <artifactDaysToKeep>-1</artifactDaysToKeep>
+          <artifactNumToKeep>-1</artifactNumToKeep>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </log-rotator-property>
+    </entry>
+    <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
       <external-property>
         <originalValue class="hudson.plugins.xvnc.Xvnc">
@@ -100,6 +112,7 @@
           </maven-builder>
           <hudson.tasks.Shell>
             <disabled>false</disabled>
+            <description></description>
             <command>sh &quot;$WORKSPACE/org.eclipse.emf.ecoretools.build/publish-nightly.sh&quot;</command>
           </hudson.tasks.Shell>
         </originalValue>
@@ -109,7 +122,7 @@
     <entry>
       <string>jdk</string>
       <string-property>
-        <originalValue class="string">JDK 1.6.0 Latest</originalValue>
+        <originalValue class="string">(Valeur par défaut)</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
     </entry>
@@ -197,12 +210,12 @@
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
       <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
+      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
