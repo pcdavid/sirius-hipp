@@ -17,8 +17,7 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>cat ~pdavid/bin/make_archives.sh
-</command>
+            <command>ls /home/hudson/genie.sirius/</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
