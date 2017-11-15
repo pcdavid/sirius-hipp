@@ -158,13 +158,6 @@ verify</goals>
       </describable-list-property>
     </entry>
     <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Hérite du job)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
-    </entry>
-    <entry>
       <string>hudson-tasks-ArtifactArchiver</string>
       <external-property>
         <originalValue class="hudson.tasks.ArtifactArchiver">
@@ -176,6 +169,13 @@ verify</goals>
         <propertyOverridden>false</propertyOverridden>
         <modified>true</modified>
       </external-property>
+    </entry>
+    <entry>
+      <string>jdk</string>
+      <string-property>
+        <originalValue class="string">(Hérite du job)</originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </string-property>
     </entry>
     <entry>
       <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>

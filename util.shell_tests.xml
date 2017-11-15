@@ -17,7 +17,7 @@
           <hudson.tasks.Shell>
             <disabled>false</disabled>
             <description></description>
-            <command>ls /home/hudson/genie.sirius/</command>
+            <command>ls</command>
           </hudson.tasks.Shell>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
