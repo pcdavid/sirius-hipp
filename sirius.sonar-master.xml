@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Launch tests and Sonar analysis.&lt;BR&gt;
+This job is also impacted by Sirius tests problem on Eclipse infrastructure (see bugzilla &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=445371&quot;&gt;445371&lt;/a&gt; for more details).</description>
   <project-properties class="concurrent-hash-map">
     <entry>
       <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
@@ -53,10 +54,11 @@
           <language></language>
           <mavenOpts></mavenOpts>
           <jobAdditionalProperties>-P
-headless,full,incubation,junit,swtbot-sequence,swtbot-part1,swtbot-part2
+headless,full,junit,swtbot-sequence,swtbot-part1,swtbot-part2
 -Dmaven.repo.local=$WORKSPACE/.maven/repo
 -Djava.io.tmpdir=$WORKSPACE/.maven/tmp
--Dsonar.language=java</jobAdditionalProperties>
+-Dsonar.language=java
+-Dplatform-version-name=$PLATFORM</jobAdditionalProperties>
           <mavenInstallationName>apache-maven-latest</mavenInstallationName>
           <rootPom>packaging/org.eclipse.sirius.parent/pom.xml</rootPom>
         </originalValue>
@@ -83,23 +85,13 @@ headless,full,incubation,junit,swtbot-sequence,swtbot-part1,swtbot-part2
               <hudson.model.StringParameterDefinition>
                 <name>MAVEN_OPTS</name>
                 <description>MAVEN_OPTS due to bug 474406</description>
-                <defaultValue>-XX:MaxPermSize=128m -Xmx3g</defaultValue>
+                <defaultValue>-Xmx4g</defaultValue>
               </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </copy-write-list-property>
-    </entry>
-    <entry>
-      <string>hudson-triggers-SCMTrigger</string>
-      <trigger-property>
-        <originalValue class="hudson.triggers.SCMTrigger">
-          <spec>#every day @ 15:45
-45 15 * * *</spec>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
     </entry>
     <entry>
       <string>builders</string>
@@ -127,6 +119,9 @@ export SWT_GTK3=0</command>
               <properties>
                 <entries>
                   <entry name="platform-version-name" value="$PLATFORM"/>
+                  <entry name="maven.test.failure.ignore" value="true"/>
+                  <entry name="tests.skipLongTests" value="true"/>
+                  <entry name="tests.skipUnreliableTests" value="true"/>
                 </entries>
               </properties>
               <errors>false</errors>
@@ -136,7 +131,6 @@ export SWT_GTK3=0</command>
               <profiles>
                 <string>headless</string>
                 <string>full</string>
-                <string>incubation</string>
                 <string>junit</string>
                 <string>swtbot-sequence</string>
                 <string>swtbot-part1</string>
@@ -161,6 +155,14 @@ export SWT_GTK3=0</command>
         <originalValue class="string">JDK-1.8.0</originalValue>
         <propertyOverridden>false</propertyOverridden>
       </string-property>
+    </entry>
+    <entry>
+      <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
+      <external-property>
+        <originalValue class="hudson.plugins.timestamper.TimestamperBuildWrapper"/>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
     </entry>
     <entry>
       <string>scm</string>
@@ -233,7 +235,8 @@ export SWT_GTK3=0</command>
       <string>hudson-triggers-TimerTrigger</string>
       <trigger-property>
         <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>@weekly</spec>
+          <spec>#every sunday @ 02:00
+0 2 * * 7</spec>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </trigger-property>
@@ -244,20 +247,20 @@ export SWT_GTK3=0</command>
   <creationTime>1428994556897</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
   <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>

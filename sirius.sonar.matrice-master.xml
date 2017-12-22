@@ -14,43 +14,13 @@
       <string>logRotator</string>
       <log-rotator-property>
         <originalValue class="hudson.tasks.LogRotator">
-          <daysToKeep>20</daysToKeep>
-          <numToKeep>30</numToKeep>
+          <daysToKeep>-1</daysToKeep>
+          <numToKeep>20</numToKeep>
           <artifactDaysToKeep>-1</artifactDaysToKeep>
           <artifactNumToKeep>-1</artifactNumToKeep>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
       </log-rotator-property>
-    </entry>
-    <entry>
-      <string>axes</string>
-      <axis-list-property>
-        <originalValue class="hudson.matrix.AxisList">
-          <hudson.matrix.TextAxis>
-            <name>PLATFORM</name>
-            <values>
-              <string>mars</string>
-              <string>neon</string>
-            </values>
-          </hudson.matrix.TextAxis>
-          <hudson.matrix.TextAxis>
-            <name>SUITE</name>
-            <values>
-              <string>junit</string>
-              <string>swtbot-sequence</string>
-              <string>swtbot-part1</string>
-              <string>swtbot-part2</string>
-            </values>
-          </hudson.matrix.TextAxis>
-          <hudson.matrix.JDKAxis>
-            <name>jdk</name>
-            <values>
-              <string>JDK-1.8.0</string>
-            </values>
-          </hudson.matrix.JDKAxis>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </axis-list-property>
     </entry>
     <entry>
       <string>hudson-plugins-xvnc-Xvnc</string>
@@ -63,16 +33,27 @@
       </external-property>
     </entry>
     <entry>
-      <string>hudson-tasks-Mailer</string>
-      <external-property>
-        <originalValue class="hudson.tasks.Mailer">
-          <recipients></recipients>
-          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-          <sendToIndividuals>true</sendToIndividuals>
+      <string>axes</string>
+      <axis-list-property>
+        <originalValue class="hudson.matrix.AxisList">
+          <hudson.matrix.JDKAxis>
+            <name>jdk</name>
+            <values>
+              <string>JDK-1.8.0</string>
+            </values>
+          </hudson.matrix.JDKAxis>
+          <hudson.matrix.TextAxis>
+            <name>SUITE</name>
+            <values>
+              <string>junit</string>
+              <string>swtbot-sequence</string>
+              <string>swtbot-part1</string>
+              <string>swtbot-part2</string>
+            </values>
+          </hudson.matrix.TextAxis>
         </originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
+      </axis-list-property>
     </entry>
     <entry>
       <string>hudson-tasks-junit-JUnitResultArchiver</string>
@@ -87,6 +68,54 @@
       </external-property>
     </entry>
     <entry>
+      <string>hudson-plugins-sonar-SonarPublisher</string>
+      <external-property>
+        <originalValue class="hudson.plugins.sonar.SonarPublisher">
+          <jdk>(Hérite du job)</jdk>
+          <branch></branch>
+          <language></language>
+          <mavenOpts></mavenOpts>
+          <jobAdditionalProperties>-P
+headless,full,junit,swtbot-sequence,swtbot-part1,swtbot-part2
+-Dmaven.repo.local=$WORKSPACE/.maven/repo
+-Djava.io.tmpdir=$WORKSPACE/.maven/tmp
+-Dsonar.language=java
+-Dplatform-version-name=$PLATFORM</jobAdditionalProperties>
+          <mavenInstallationName>(Hérite du job)</mavenInstallationName>
+          <rootPom>packaging/org.eclipse.sirius.parent/pom.xml</rootPom>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+        <modified>true</modified>
+      </external-property>
+    </entry>
+    <entry>
+      <string>parametersDefinitionProperties</string>
+      <copy-write-list-property>
+        <originalValue class="hudson.util.CopyOnWriteList">
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.StringParameterDefinition>
+                <name>MAVEN_OPTS</name>
+                <description>MAVEN_OPTS due to bug 474406</description>
+                <defaultValue>-Xmx4g</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.ChoiceParameterDefinition>
+                <name>PLATFORM</name>
+                <description></description>
+                <choices class="java.util.Arrays$ArrayList">
+                  <a class="string-array">
+                    <string>neon</string>
+                    <string>mars</string>
+                  </a>
+                </choices>
+              </hudson.model.ChoiceParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+        </originalValue>
+        <propertyOverridden>false</propertyOverridden>
+      </copy-write-list-property>
+    </entry>
+    <entry>
       <string>builders</string>
       <describable-list-property>
         <originalValue class="hudson.util.DescribableList">
@@ -97,21 +126,16 @@
 rm -rf &quot;$WORKSPACE/plugins/org.eclipse.sirius.tests.swtbot/screenshots&quot;
 
 # Make sure we have a properly configured window manager for SWTbot tests
-sleep 5
 ICEWM_PRIVCFG=&quot;$WORKSPACE/.icewm/&quot; /usr/bin/icewm --no-configure &amp;
 
-export SWT_GTK3=0
-</command>
+export SWT_GTK3=0</command>
           </hudson.tasks.Shell>
           <maven-builder>
             <disabled>false</disabled>
             <config>
               <installationId>apache-maven-latest</installationId>
-              <goals>clean
-integration-test
--B
-</goals>
-              <privateRepository>true</privateRepository>
+              <goals>clean integration-test -B</goals>
+              <privateRepository>false</privateRepository>
               <privateTmpdir>false</privateTmpdir>
               <pomFile>packaging/org.eclipse.sirius.parent/pom.xml</pomFile>
               <properties>
@@ -124,16 +148,14 @@ integration-test
               <offline>false</offline>
               <snapshotUpdateMode>NORMAL</snapshotUpdateMode>
               <profiles>
-                <string>full</string>
                 <string>headless</string>
+                <string>full</string>
                 <string>$SUITE</string>
               </profiles>
               <recursive>true</recursive>
               <checksumMode>NORMAL</checksumMode>
               <failMode>NORMAL</failMode>
               <makeMode>NONE</makeMode>
-              <projects/>
-              <mavenOpts>-Xms256m -Xmx1024m</mavenOpts>
               <settingsId>NONE</settingsId>
               <globalSettingsId>NONE</globalSettingsId>
               <toolChainsId>NONE</toolChainsId>
@@ -144,17 +166,11 @@ integration-test
       </describable-list-property>
     </entry>
     <entry>
-      <string>hudson-tasks-ArtifactArchiver</string>
-      <external-property>
-        <originalValue class="hudson.tasks.ArtifactArchiver">
-          <artifacts>plugins/*.test*/target/screenshots/*.jpeg, plugins/*.test*/target/surefire.properties,plugins/org.eclipse.sirius.tests*/org_eclipse_sirius_tests_*.txt</artifacts>
-          <compressionType>GZIP</compressionType>
-          <latestOnly>false</latestOnly>
-          <autoValidateFileMask>false</autoValidateFileMask>
-        </originalValue>
+      <string>runSequentially</string>
+      <boolean-property>
+        <originalValue class="boolean">true</originalValue>
         <propertyOverridden>false</propertyOverridden>
-        <modified>true</modified>
-      </external-property>
+      </boolean-property>
     </entry>
     <entry>
       <string>hudson-plugins-timestamper-TimestamperBuildWrapper</string>
@@ -201,7 +217,7 @@ integration-test
           </remoteRepositories>
           <branches>
             <hudson.plugins.git.BranchSpec>
-              <name>v4.1.x</name>
+              <name>master</name>
             </hudson.plugins.git.BranchSpec>
           </branches>
           <mergeOptions/>
@@ -215,6 +231,9 @@ integration-test
           <ignoreNotifyCommit>false</ignoreNotifyCommit>
           <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
           <gitTool>Default</gitTool>
+          <browser class="hudson.plugins.git.browser.CGit">
+            <url>http://git.eclipse.org/c/sirius/org.eclipse.sirius.git/</url>
+          </browser>
           <submoduleCfg class="list"/>
           <includedRegions></includedRegions>
           <excludedRegions></excludedRegions>
@@ -228,27 +247,25 @@ integration-test
         <propertyOverridden>false</propertyOverridden>
       </scm-property>
     </entry>
-    <entry>
-      <string>hudson-triggers-TimerTrigger</string>
-      <trigger-property>
-        <originalValue class="hudson.triggers.TimerTrigger">
-          <spec>0 18 * * *</spec>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </trigger-property>
-    </entry>
   </project-properties>
   <keepDependencies>false</keepDependencies>
-  <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1481273773837</creationTime>
+  <createdBy>laurent.redor@obeo.fr</createdBy>
+  <creationTime>1513757421098</creationTime>
   <properties>
     <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Item.Build:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Update:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Read:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Configure:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Delete:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Run.Delete:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
+      <permission>hudson.model.Item.Workspace:laurent.redor@obeo.fr</permission>
       <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
   </properties>
@@ -261,8 +278,12 @@ integration-test
   <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
+  <builders/>
+  <publishers/>
+  <buildWrappers/>
   <axes/>
   <runSequentially>false</runSequentially>
   <configSubmit>false</configSubmit>
