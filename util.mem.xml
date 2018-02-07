@@ -1,66 +1,17 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<project>
-  <actions/>
-  <description></description>
-  <project-properties class="concurrent-hash-map">
-    <entry>
-      <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
-      <base-property>
-        <originalValue class="hudson.plugins.disk_usage.DiskUsageProperty"/>
-        <propertyOverridden>false</propertyOverridden>
-      </base-property>
-    </entry>
-    <entry>
-      <string>builders</string>
-      <describable-list-property>
-        <originalValue class="hudson.util.DescribableList">
-          <hudson.tasks.Shell>
-            <disabled>false</disabled>
-            <description></description>
-            <command>free</command>
-          </hudson.tasks.Shell>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </describable-list-property>
-    </entry>
-    <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Valeur par défaut)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
-    </entry>
-    <entry>
-      <string>scm</string>
-      <scm-property>
-        <originalValue class="hudson.scm.NullSCM"/>
-        <propertyOverridden>false</propertyOverridden>
-      </scm-property>
-    </entry>
-  </project-properties>
-  <keepDependencies>false</keepDependencies>
-  <createdBy>cedric.brun@obeo.fr</createdBy>
-  <creationTime>1427795457738</creationTime>
-  <properties>
-    <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:cedric.brun@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:cedric.brun@obeo.fr</permission>
-    </hudson.security.AuthorizationMatrixProperty>
-  </properties>
-  <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
-  <cascading-job-properties class="java.util.concurrent.CopyOnWriteArraySet">
-    <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
-  </cascading-job-properties>
-  <scm class="hudson.scm.NullSCM"/>
-  <canRoam>false</canRoam>
-  <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
-  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <concurrentBuild>false</concurrentBuild>
-  <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
-</project>
+<html><head><meta http-equiv='refresh' content='1;url=/sirius/login?from=%2Fsirius%2Fjob%2Futil.mem%2Fconfig.xml'/><script>window.location.replace('/sirius/login?from=%2Fsirius%2Fjob%2Futil.mem%2Fconfig.xml');</script></head><body style='background-color:white; color:white;'>
+
+
+Authentication required
+<!--
+You are authenticated as: anonymous
+Groups that you are in:
+  
+Permission you need to have (but didn't): hudson.model.Item.ExtendedRead
+ ... which is implied by: hudson.model.Item.Configure
+ ... which is implied by: hudson.security.Permission.GenericConfigure
+ ... which is implied by: hudson.security.Permission.GenericUpdate
+ ... which is implied by: hudson.security.Permission.GenericWrite
+ ... which is implied by: hudson.model.Hudson.Administer
+-->
+
+</body></html>                                                                                                                                                                                                                                                                                                            

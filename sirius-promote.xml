@@ -1,160 +1,17 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<project>
-  <actions/>
-  <description>Promote the latest nightly build from a given stream as a Stable, Milestone or Release.</description>
-  <project-properties class="concurrent-hash-map">
-    <entry>
-      <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
-      <base-property>
-        <originalValue class="hudson.plugins.disk_usage.DiskUsageProperty"/>
-        <propertyOverridden>false</propertyOverridden>
-      </base-property>
-    </entry>
-    <entry>
-      <string>parametersDefinitionProperties</string>
-      <copy-write-list-property>
-        <originalValue class="hudson.util.CopyOnWriteList">
-          <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-              <hudson.model.ChoiceParameterDefinition>
-                <name>STREAM</name>
-                <description></description>
-                <choices class="java.util.Arrays$ArrayList">
-                  <a class="string-array">
-                    <string>5.1.x</string>
-                    <string>5.0.x</string>
-                    <string>4.1.x</string>
-                    <string>4.0.x</string>
-                    <string>3.1.x</string>
-                    <string>3.0.x</string>
-                    <string>2.0.x</string>
-                    <string>1.0.x</string>
-                    <string>0.9.x</string>
-                  </a>
-                </choices>
-              </hudson.model.ChoiceParameterDefinition>
-              <hudson.model.ChoiceParameterDefinition>
-                <name>TYPE</name>
-                <description></description>
-                <choices class="java.util.Arrays$ArrayList">
-                  <a class="string-array">
-                    <string>stable</string>
-                    <string>milestone</string>
-                    <string>release</string>
-                  </a>
-                </choices>
-              </hudson.model.ChoiceParameterDefinition>
-              <hudson.model.StringParameterDefinition>
-                <name>NAME</name>
-                <description></description>
-                <defaultValue></defaultValue>
-              </hudson.model.StringParameterDefinition>
-            </parameterDefinitions>
-          </hudson.model.ParametersDefinitionProperty>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </copy-write-list-property>
-    </entry>
-    <entry>
-      <string>builders</string>
-      <describable-list-property>
-        <originalValue class="hudson.util.DescribableList">
-          <hudson.tasks.Shell>
-            <disabled>false</disabled>
-            <description></description>
-            <command>make_archives() {
-    
-    root=$(pwd)
-    version=$(basename &quot;$root&quot;)
-    for platform in *; do
-        if [ -d &quot;$platform&quot; ]; then
-            (
-                cd &quot;$platform&quot; || exit 1
-                echo &quot;Archiving org.eclipse.sirius-${version}-${platform}.zip&quot;
-                zip -rq &quot;$root/org.eclipse.sirius-${version}-${platform}.zip&quot; artifacts.jar content.jar features plugins
-            )
-            
-            ( 
-                cd &quot;$platform/tests&quot; || exit 1
-                echo &quot;Archiving org.eclipse.sirius.tests-${version}-${platform}.zip&quot;
-                zip -rq &quot;$root/org.eclipse.sirius.tests-${version}-${platform}.zip&quot; artifacts.jar content.jar features plugins
-            )
-            
-            if [ -d &quot;$platform/incubation&quot; ]; then
-                (
-                    cd &quot;$platform/incubation&quot; || exit 1
-                    echo &quot;Archiving org.eclipse.sirius.incubation-${version}-${platform}.zip&quot;
-                    zip -rq &quot;$root/org.eclipse.sirius.incubation-${version}-${platform}.zip&quot; artifacts.jar content.jar features plugins
-                )
-            fi
-        fi
-    done
-}
+<html><head><meta http-equiv='refresh' content='1;url=/sirius/login?from=%2Fsirius%2Fjob%2Fsirius-promote%2Fconfig.xml'/><script>window.location.replace('/sirius/login?from=%2Fsirius%2Fjob%2Fsirius-promote%2Fconfig.xml');</script></head><body style='background-color:white; color:white;'>
 
-ROOT_FOLDER=&apos;/home/data/httpd/download.eclipse.org/sirius/updates&apos;
-SOURCE_FOLDER=$(find /home/data/httpd/download.eclipse.org/sirius/updates/nightly/ -type d -maxdepth 1 -name &quot;${STREAM%.x}*-N*&quot; | sort | tail -n 1)
-SOURCE_BUILD_ID=$(basename &quot;$SOURCE_FOLDER&quot;)
-VERSION=&quot;${SOURCE_BUILD_ID%-N*}&quot;
 
-case &quot;$TYPE&quot; in
-    &quot;release&quot;)
-        DESTINATION=&quot;${ROOT_FOLDER}/releases/$VERSION&quot;
-        cp -a $SOURCE_FOLDER $DESTINATION &amp;&amp; cd $DESTINATION &amp;&amp; make_archives
-    ;;
-    &quot;milestone&quot;)
-        DESTINATION=&quot;${ROOT_FOLDER}/milestones/$VERSION$NAME&quot;
-        cp -a $SOURCE_FOLDER $DESTINATION &amp;&amp; cd $DESTINATION &amp;&amp; make_archives
-    ;;
-    &quot;stable&quot;)
-        TARGET_BUILD_ID=$(echo &quot;$SOURCE_BUILD_ID&quot; | sed -e &apos;s/-N/-S/&apos;)
-        DESTINATION=&quot;${ROOT_FOLDER}/stable/$TARGET_BUILD_ID&quot;
-        cp -a $SOURCE_FOLDER $DESTINATION &amp;&amp; cd $DESTINATION &amp;&amp; make_archives
-    ;;
-esac
-</command>
-          </hudson.tasks.Shell>
-        </originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </describable-list-property>
-    </entry>
-    <entry>
-      <string>jdk</string>
-      <string-property>
-        <originalValue class="string">(Valeur par défaut)</originalValue>
-        <propertyOverridden>false</propertyOverridden>
-      </string-property>
-    </entry>
-    <entry>
-      <string>scm</string>
-      <scm-property>
-        <originalValue class="hudson.scm.NullSCM"/>
-        <propertyOverridden>false</propertyOverridden>
-      </scm-property>
-    </entry>
-  </project-properties>
-  <keepDependencies>false</keepDependencies>
-  <createdBy>pierre-charles.david@obeo.fr</createdBy>
-  <creationTime>1472462893811</creationTime>
-  <properties>
-    <hudson.security.AuthorizationMatrixProperty>
-      <permission>hudson.model.Item.Build:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Read:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Configure:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
-      <permission>hudson.model.Item.Workspace:pierre-charles.david@obeo.fr</permission>
-    </hudson.security.AuthorizationMatrixProperty>
-  </properties>
-  <cascadingChildrenNames class="java.util.concurrent.CopyOnWriteArraySet"/>
-  <cascading-job-properties class="java.util.concurrent.CopyOnWriteArraySet">
-    <string>hudson-plugins-disk_usage-DiskUsageProperty</string>
-  </cascading-job-properties>
-  <scm class="hudson.scm.NullSCM"/>
-  <canRoam>false</canRoam>
-  <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
-  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <concurrentBuild>false</concurrentBuild>
-  <cleanWorkspaceRequired>false</cleanWorkspaceRequired>
-</project>
+Authentication required
+<!--
+You are authenticated as: anonymous
+Groups that you are in:
+  
+Permission you need to have (but didn't): hudson.model.Item.ExtendedRead
+ ... which is implied by: hudson.model.Item.Configure
+ ... which is implied by: hudson.security.Permission.GenericConfigure
+ ... which is implied by: hudson.security.Permission.GenericUpdate
+ ... which is implied by: hudson.security.Permission.GenericWrite
+ ... which is implied by: hudson.model.Hudson.Administer
+-->
+
+</body></html>                                                                                                                                                                                                                                                                                                            

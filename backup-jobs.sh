@@ -18,6 +18,6 @@ fetch_jobs() {
 
 cd $(dirname $0)
 rm -f *.xml
-fetch_jobs https://hudson.eclipse.org/sirius
+fetch_jobs https://ci.eclipse.org/sirius
 git add -A .
 git commit -m "Automatic backup."
