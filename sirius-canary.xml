@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
   <description>Builds &lt;a href=&quot;http://wiki.eclipse.org/Sirius&quot;&gt;Sirius&lt;/a&gt; from &lt;a href=&quot;http://git.eclipse.org/c/sirius/org.eclipse.sirius.git&quot;&gt;the official Eclipse sources&lt;/a&gt; using the bleeding-edge versions of all our dependencies. It is expected that this build will see punctual failures once in a while, but any repeated failures should be investigated to see if they correspond to real integration issues.&#xd;
@@ -16,6 +16,10 @@
       <permission>hudson.model.Run.Delete:pierre-charles.david@obeo.fr</permission>
       <permission>hudson.model.Run.Update:pierre-charles.david@obeo.fr</permission>
     </hudson.security.AuthorizationMatrixProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>20</daysToKeep>
@@ -24,13 +28,8 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <hudson.plugins.disk__usage.DiskUsageProperty plugin="disk-usage@0.28"/>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
-      <autoRebuild>false</autoRebuild>
-      <rebuildDisabled>false</rebuildDisabled>
-    </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.7.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.10.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -48,11 +47,12 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <canRoam>true</canRoam>
+  <assignedNode>migration</assignedNode>
+  <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <jdk>jdk1.8.0-latest</jdk>
+  <jdk>oracle-jdk8-latest</jdk>
   <triggers>
     <hudson.triggers.TimerTrigger>
       <spec>@daily</spec>
@@ -73,7 +73,7 @@ package</targets>
     </hudson.tasks.Maven>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.20">
+    <hudson.tasks.Mailer plugin="mailer@1.23">
       <recipients>pierre-charles.david@obeo.fr laurent.redor@obeo.fr</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
